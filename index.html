@@ -1123,15 +1123,13 @@ if (state.wakeLock) {
           audio: base64Audio.split(',')[1] // Remove data URL prefix
         };
 
-        const response = await fetch(CONFIG.appsScriptUrl, {
-          method: 'POST',
-          mode: 'no-cors', // Apps Script requires this
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload)
-        });
-
+       const response = await fetch(CONFIG.appsScriptUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'text/plain',
+  },
+  body: JSON.stringify(payload)
+});
         // Due to no-cors, we can't read the response, but if we get here, it likely worked
         showScreen('success');
 
