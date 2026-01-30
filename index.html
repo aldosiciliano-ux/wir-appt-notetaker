@@ -920,6 +920,15 @@
     // ============================================
     
     async function startRecording() {
+     // Request wake lock to prevent screen from turning off
+if ('wakeLock' in navigator) {
+  try {
+    state.wakeLock = await navigator.wakeLock.request('screen');
+    console.log('Wake lock active');
+  } catch (err) {
+    console.log('Wake lock failed:', err);
+  }
+}
       state.clientName = elements.clientName.value.trim();
       state.selectedTC = JSON.parse(elements.tcSelect.value);
       state.notes = elements.notes.value.trim();
@@ -1065,6 +1074,11 @@
     }
 
     async function finishRecording() {
+      // Release wake lock
+if (state.wakeLock) {
+  state.wakeLock.release();
+  state.wakeLock = null;
+}
       hideConfirmModal();
       
       // Stop recording
