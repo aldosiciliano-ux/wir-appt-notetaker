@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>WIR Appointment Recorder</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    :root {
+      --wir-blue-light: #5BC4F1;
+      --wir-blue-mid: #3AA4DA;
+      --wir-blue-dark: #1E5F99;
+      --wir-green: #A4D233;
+      --wir-black: #000000;
+      --wir-white: #FFFFFF;
+      --gradient-wir: linear-gradient(135deg, var(--wir-blue-light) 0%, var(--wir-blue-dark) 50%, var(--wir-green) 100%);
+      --gradient-blue: linear-gradient(135deg, var(--wir-blue-light) 0%, var(--wir-blue-dark) 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--wir-black);
+      min-height: 100vh;
+      color: var(--wir-white);
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    .logo {
+      height: 50px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+
+    .logo-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 16px;
+      display: block;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--wir-white);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: var(--wir-white);
+      font-size: 16px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--wir-blue-light);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 3px rgba(91, 196, 241, 0.2);
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    select.form-input {
+      cursor: pointer;
+    }
+
+    select.form-input option {
+      background: var(--wir-black);
+      color: var(--wir-white);
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--gradient-blue);
+      color: var(--wir-white);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(91, 196, 241, 0.3);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--wir-white);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--wir-green) 0%, #8BC02A 100%);
+      color: var(--wir-black);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: var(--wir-white);
+    }
+
+    /* Appointment Type Buttons */
+    .type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .type-btn {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: var(--wir-white);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .type-btn:hover {
+      background: rgba(91, 196, 241, 0.1);
+      border-color: rgba(91, 196, 241, 0.3);
+    }
+
+    .type-btn.selected {
+      background: rgba(91, 196, 241, 0.2);
+      border-color: var(--wir-blue-light);
+      color: var(--wir-blue-light);
+    }
+
+    /* Recording Screen */
+    .recording-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .recording-status {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .recording-dot {
+      width: 12px;
+      height: 12px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .recording-dot.paused {
+      background: var(--wir-green);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .timer {
+      font-size: 64px;
+      font-weight: 300;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 40px;
+      background: var(--gradient-wir);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .waveform {
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 40px;
+    }
+
+    .wave-bar {
+      width: 4px;
+      background: var(--gradient-blue);
+      border-radius: 2px;
+      transition: height 0.1s;
+    }
+
+    .recording-info {
+      text-align: center;
+      margin-bottom: 40px;
+      opacity: 0.8;
+    }
+
+    .recording-info p {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .recording-info strong {
+      color: var(--wir-blue-light);
+    }
+
+    .recording-controls {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .record-btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .record-btn.pause {
+      background: var(--gradient-blue);
+    }
+
+    .record-btn.resume {
+      background: linear-gradient(135deg, var(--wir-green) 0%, #8BC02A 100%);
+    }
+
+    .record-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 25px rgba(91, 196, 241, 0.4);
+    }
+
+    .record-btn svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--wir-white);
+    }
+
+    .record-btn.resume svg {
+      fill: var(--wir-black);
+    }
+
+    .finish-btn {
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      border: none;
+      border-radius: 40px;
+      color: var(--wir-white);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .finish-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Warning Banner */
+    .warning-banner {
+      background: rgba(164, 210, 51, 0.15);
+      border: 1px solid rgba(164, 210, 51, 0.4);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .warning-banner svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--wir-green);
+      flex-shrink: 0;
+    }
+
+    /* Confirmation Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal {
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 28px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .modal p {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-buttons .btn {
+      flex: 1;
+    }
+
+    /* Success Screen */
+    .success-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, var(--wir-green) 0%, #8BC02A 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 40px rgba(164, 210, 51, 0.3);
+    }
+
+    .success-icon svg {
+      width: 50px;
+      height: 50px;
+      fill: var(--wir-black);
+    }
+
+    .success-screen h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .success-screen p {
+      font-size: 16px;
+      opacity: 0.8;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top-color: var(--wir-blue-light);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* User Badge */
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      background: var(--gradient-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .user-email {
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      padding: 8px;
+      transition: color 0.2s;
+    }
+
+    .logout-btn:hover {
+      color: var(--wir-white);
+    }
+
+    /* Hide screens by default */
+    .screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* Accent text */
+    .text-accent {
+      color: var(--wir-blue-light);
+    }
+
+    .text-green {
+      color: var(--wir-green);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 20px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 380px) {
+      .timer {
+        font-size: 48px;
+      }
+      
+      .type-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+      <div class="header" style="padding-top: 60px;">
+        <!-- WIR Logo SVG -->
+        <svg class="logo-icon" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- W shape with gradient blues -->
+          <polygon points="0,0 15,0 25,50 35,0 45,0 55,50 65,0 80,0 55,70 40,70 30,25 20,70 5,70" fill="url(#blueGrad)"/>
+          <!-- I shape -->
+          <rect x="58" y="0" width="12" height="70" fill="url(#blueGrad2)"/>
+          <!-- R shape with green -->
+          <path d="M75,0 L75,70 L87,70 L87,45 L95,45 Q105,45 105,30 L105,15 Q105,0 95,0 Z M87,12 L92,12 Q95,12 95,17 L95,28 Q95,33 92,33 L87,33 Z" fill="#A4D233"/>
+          <defs>
+            <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#5BC4F1"/>
+              <stop offset="100%" style="stop-color:#1E5F99"/>
+            </linearGradient>
+            <linearGradient id="blueGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#3AA4DA"/>
+              <stop offset="100%" style="stop-color:#1E5F99"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <h1>Appointment Recorder</h1>
+        <p>Record and transcribe your listing appointments</p>
+      </div>
+      
+      <div class="card" style="margin-top: 20px;">
+        <div class="card-title">Sign In</div>
+        
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="you@wattersinternational.com">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="Enter password">
+        </div>
+        
+        <button id="loginBtn" class="btn btn-primary">Sign In</button>
+        
+        <p id="loginError" style="color: #ef4444; font-size: 14px; margin-top: 12px; text-align: center; display: none;"></p>
+      </div>
+      
+      <p style="text-align: center; font-size: 12px; opacity: 0.4; margin-top: auto; padding: 20px;">
+        Watters International Realty
+      </p>
+    </div>
+
+    <!-- Setup Screen -->
+    <div id="setupScreen" class="screen">
+      <div class="header">
+        <h1>New Recording</h1>
+        <p>Enter appointment details</p>
+      </div>
+      
+      <div class="user-badge">
+        <div class="user-avatar" id="userAvatar">A</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">Agent Name</div>
+          <div class="user-email" id="userEmailDisplay">agent@email.com</div>
+        </div>
+        <button class="logout-btn" id="logoutBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">Client Name <span class="text-accent">*</span></label>
+          <input type="text" id="clientName" class="form-input" placeholder="Enter client name">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Appointment Type <span class="text-accent">*</span></label>
+          <div class="type-grid">
+            <button class="type-btn" data-type="Listing Appointment">Listing Appointment</button>
+            <button class="type-btn" data-type="Buyer Consultation">Buyer Consultation</button>
+            <button class="type-btn" data-type="Follow-up">Follow-up</button>
+            <button class="type-btn" data-type="Other">Other</button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Transaction Coordinator <span class="text-accent">*</span></label>
+          <select id="tcSelect" class="form-input">
+            <option value="">Select TC...</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Notes <span style="opacity: 0.5;">(optional)</span></label>
+          <input type="text" id="notes" class="form-input" placeholder="Any additional notes">
+        </div>
+        
+        <button id="startRecordingBtn" class="btn btn-primary" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+          Start Recording
+        </button>
+      </div>
+    </div>
+
+    <!-- Recording Screen -->
+    <div id="recordingScreen" class="screen">
+      <div class="recording-screen">
+        <div class="recording-status">
+          <div class="recording-dot" id="recordingDot"></div>
+          <span id="recordingStatusText">Recording</span>
+        </div>
+        
+        <div class="timer" id="timer">00:00:00</div>
+        
+        <div class="waveform" id="waveform"></div>
+        
+        <div class="recording-info">
+          <p><strong id="recordingClient">Client Name</strong></p>
+          <p id="recordingType">Listing Appointment</p>
+        </div>
+        
+        <div id="shortRecordingWarning" class="warning-banner" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          <span>Recording is under 15 minutes. Are you sure the appointment is complete?</span>
+        </div>
+        
+        <div class="recording-controls">
+          <button class="record-btn pause" id="pauseResumeBtn">
+            <svg id="pauseIcon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            <svg id="playIcon" viewBox="0 0 24 24" style="display: none;"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          
+          <button class="finish-btn" id="finishBtn">Finish Recording</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+      <div class="modal">
+        <h3 id="modalTitle">Finish Recording?</h3>
+        <p id="modalMessage">Your recording will be processed and you'll receive the transcript via email within 15 minutes.</p>
+        <div class="modal-buttons">
+          <button class="btn btn-secondary" id="modalCancel">Keep Recording</button>
+          <button class="btn btn-primary" id="modalConfirm">Finish</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Uploading Screen -->
+    <div id="uploadingScreen" class="screen">
+      <div class="success-screen">
+        <div class="spinner" style="width: 60px; height: 60px; border-width: 4px; margin-bottom: 24px;"></div>
+        <h2>Uploading...</h2>
+        <p>Please wait while we upload your recording.</p>
+      </div>
+    </div>
+
+    <!-- Success Screen -->
+    <div id="successScreen" class="screen">
+      <div class="success-screen">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h2>Recording Submitted!</h2>
+        <p>Your appointment recording is being processed. You'll receive the transcript and notes via email within <span class="text-green">15 minutes</span>.</p>
+        <button id="newRecordingBtn" class="btn btn-success">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Start New Recording
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ============================================
+    // Configuration
+    // ============================================
+    
+    const CONFIG = {
+      appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzNbvlZCTMCPKYbPQJ5pvgS66iKN8naDqG09ATA7EmNHzmPBTaKLmWQ4SGYC13GdPP4Pw/exec',
+      password: '#ONESTEPAHEAD2026',
+      teamMembers: [
+        { name: 'Sarah Johnson', email: 'sarah.johnson@wattersinternational.com' },
+        { name: 'Mike Chen', email: 'mike.chen@wattersinternational.com' },
+        { name: 'Lisa Rodriguez', email: 'lisa.rodriguez@wattersinternational.com' }
+      ]
+    };
+
+    // ============================================
+    // State
+    // ============================================
+    
+    let state = {
+      user: null,
+      clientName: '',
+      appointmentType: '',
+      selectedTC: null,
+      notes: '',
+      isRecording: false,
+      isPaused: false,
+      recordingStartTime: null,
+      elapsedTime: 0,
+      pausedTime: 0,
+      mediaRecorder: null,
+      audioChunks: [],
+      timerInterval: null,
+      waveformInterval: null,
+      audioContext: null,
+      analyser: null
+    };
+
+    // ============================================
+    // DOM Elements
+    // ============================================
+    
+    const screens = {
+      login: document.getElementById('loginScreen'),
+      setup: document.getElementById('setupScreen'),
+      recording: document.getElementById('recordingScreen'),
+      uploading: document.getElementById('uploadingScreen'),
+      success: document.getElementById('successScreen')
+    };
+
+    const elements = {
+      loginEmail: document.getElementById('loginEmail'),
+      loginPassword: document.getElementById('loginPassword'),
+      loginBtn: document.getElementById('loginBtn'),
+      loginError: document.getElementById('loginError'),
+      userAvatar: document.getElementById('userAvatar'),
+      userName: document.getElementById('userName'),
+      userEmailDisplay: document.getElementById('userEmailDisplay'),
+      logoutBtn: document.getElementById('logoutBtn'),
+      clientName: document.getElementById('clientName'),
+      tcSelect: document.getElementById('tcSelect'),
+      notes: document.getElementById('notes'),
+      startRecordingBtn: document.getElementById('startRecordingBtn'),
+      timer: document.getElementById('timer'),
+      waveform: document.getElementById('waveform'),
+      recordingDot: document.getElementById('recordingDot'),
+      recordingStatusText: document.getElementById('recordingStatusText'),
+      recordingClient: document.getElementById('recordingClient'),
+      recordingType: document.getElementById('recordingType'),
+      pauseResumeBtn: document.getElementById('pauseResumeBtn'),
+      pauseIcon: document.getElementById('pauseIcon'),
+      playIcon: document.getElementById('playIcon'),
+      finishBtn: document.getElementById('finishBtn'),
+      shortRecordingWarning: document.getElementById('shortRecordingWarning'),
+      confirmModal: document.getElementById('confirmModal'),
+      modalTitle: document.getElementById('modalTitle'),
+      modalMessage: document.getElementById('modalMessage'),
+      modalCancel: document.getElementById('modalCancel'),
+      modalConfirm: document.getElementById('modalConfirm'),
+      newRecordingBtn: document.getElementById('newRecordingBtn')
+    };
+
+    // ============================================
+    // Screen Navigation
+    // ============================================
+    
+    function showScreen(screenName) {
+      Object.values(screens).forEach(s => s.classList.remove('active'));
+      screens[screenName].classList.add('active');
+    }
+
+    // ============================================
+    // Login
+    // ============================================
+    
+    function checkStoredLogin() {
+      const stored = localStorage.getItem('wirUser');
+      if (stored) {
+        state.user = JSON.parse(stored);
+        updateUserDisplay();
+        showScreen('setup');
+      }
+    }
+
+    function login() {
+      const email = elements.loginEmail.value.trim();
+      const password = elements.loginPassword.value;
+
+      if (!email) {
+        showLoginError('Please enter your email');
+        return;
+      }
+
+      if (password !== CONFIG.password) {
+        showLoginError('Invalid password');
+        return;
+      }
+
+      state.user = {
+        email: email,
+        name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+      };
+
+      localStorage.setItem('wirUser', JSON.stringify(state.user));
+      updateUserDisplay();
+      showScreen('setup');
+    }
+
+    function logout() {
+      localStorage.removeItem('wirUser');
+      state.user = null;
+      elements.loginEmail.value = '';
+      elements.loginPassword.value = '';
+      showScreen('login');
+    }
+
+    function showLoginError(message) {
+      elements.loginError.textContent = message;
+      elements.loginError.style.display = 'block';
+      setTimeout(() => {
+        elements.loginError.style.display = 'none';
+      }, 3000);
+    }
+
+    function updateUserDisplay() {
+      if (state.user) {
+        elements.userAvatar.textContent = state.user.name.charAt(0).toUpperCase();
+        elements.userName.textContent = state.user.name;
+        elements.userEmailDisplay.textContent = state.user.email;
+      }
+    }
+
+    // ============================================
+    // Setup Form
+    // ============================================
+    
+    function populateTCDropdown() {
+      CONFIG.teamMembers.forEach(tc => {
+        const option = document.createElement('option');
+        option.value = JSON.stringify(tc);
+        option.textContent = tc.name;
+        elements.tcSelect.appendChild(option);
+      });
+    }
+
+    function selectAppointmentType(type) {
+      state.appointmentType = type;
+      document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.type === type);
+      });
+      validateForm();
+    }
+
+    function validateForm() {
+      const isValid = 
+        elements.clientName.value.trim() !== '' &&
+        state.appointmentType !== '' &&
+        elements.tcSelect.value !== '';
+      
+      elements.startRecordingBtn.disabled = !isValid;
+    }
+
+    // ============================================
+    // Recording
+    // ============================================
+    
+    async function startRecording() {
+      state.clientName = elements.clientName.value.trim();
+      state.selectedTC = JSON.parse(elements.tcSelect.value);
+      state.notes = elements.notes.value.trim();
+
+      // Update recording screen info
+      elements.recordingClient.textContent = state.clientName;
+      elements.recordingType.textContent = state.appointmentType;
+
+      // Initialize waveform bars
+      elements.waveform.innerHTML = '';
+      for (let i = 0; i < 40; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'wave-bar';
+        bar.style.height = '10px';
+        elements.waveform.appendChild(bar);
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        
+        // Set up audio analysis for waveform
+        state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        state.analyser = state.audioContext.createAnalyser();
+        const source = state.audioContext.createMediaStreamSource(stream);
+        source.connect(state.analyser);
+        state.analyser.fftSize = 128;
+
+        // Set up media recorder
+        state.mediaRecorder = new MediaRecorder(stream);
+        state.audioChunks = [];
+
+        state.mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            state.audioChunks.push(event.data);
+          }
+        };
+
+        state.mediaRecorder.start(1000); // Collect data every second
+        state.isRecording = true;
+        state.isPaused = false;
+        state.recordingStartTime = Date.now();
+        state.elapsedTime = 0;
+        state.pausedTime = 0;
+
+        showScreen('recording');
+        startTimer();
+        startWaveform();
+
+      } catch (error) {
+        console.error('Error accessing microphone:', error);
+        alert('Could not access microphone. Please ensure you have granted permission.');
+      }
+    }
+
+    function startTimer() {
+      state.timerInterval = setInterval(() => {
+        if (!state.isPaused) {
+          state.elapsedTime = Date.now() - state.recordingStartTime - state.pausedTime;
+          updateTimerDisplay();
+        }
+      }, 100);
+    }
+
+    function updateTimerDisplay() {
+      const totalSeconds = Math.floor(state.elapsedTime / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      elements.timer.textContent = 
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+      // Show warning if under 15 minutes
+      const isShort = totalSeconds < 15 * 60;
+      elements.shortRecordingWarning.style.display = isShort ? 'flex' : 'none';
+    }
+
+    function startWaveform() {
+      const bars = elements.waveform.querySelectorAll('.wave-bar');
+      const dataArray = new Uint8Array(state.analyser.frequencyBinCount);
+
+      state.waveformInterval = setInterval(() => {
+        if (state.isPaused) {
+          bars.forEach(bar => bar.style.height = '10px');
+          return;
+        }
+
+        state.analyser.getByteFrequencyData(dataArray);
+        
+        bars.forEach((bar, i) => {
+          const value = dataArray[i] || 0;
+          const height = Math.max(10, (value / 255) * 60);
+          bar.style.height = `${height}px`;
+        });
+      }, 50);
+    }
+
+    function togglePauseResume() {
+      if (state.isPaused) {
+        // Resume
+        state.mediaRecorder.resume();
+        state.isPaused = false;
+        state.pausedTime += Date.now() - state.pauseStartTime;
+        state.pauseStartTime = null;
+        
+        elements.recordingDot.classList.remove('paused');
+        elements.recordingStatusText.textContent = 'Recording';
+        elements.pauseResumeBtn.classList.remove('resume');
+        elements.pauseResumeBtn.classList.add('pause');
+        elements.pauseIcon.style.display = 'block';
+        elements.playIcon.style.display = 'none';
+      } else {
+        // Pause
+        state.mediaRecorder.pause();
+        state.isPaused = true;
+        state.pauseStartTime = Date.now();
+        
+        elements.recordingDot.classList.add('paused');
+        elements.recordingStatusText.textContent = 'Paused';
+        elements.pauseResumeBtn.classList.remove('pause');
+        elements.pauseResumeBtn.classList.add('resume');
+        elements.pauseIcon.style.display = 'none';
+        elements.playIcon.style.display = 'block';
+      }
+    }
+
+    function showFinishConfirmation() {
+      const totalSeconds = Math.floor(state.elapsedTime / 1000);
+      
+      if (totalSeconds < 15 * 60) {
+        elements.modalTitle.textContent = 'Recording is Short';
+        elements.modalMessage.textContent = `You've only recorded ${Math.floor(totalSeconds / 60)} minutes. Are you sure the appointment is complete?`;
+      } else {
+        elements.modalTitle.textContent = 'Finish Recording?';
+        elements.modalMessage.textContent = 'Your recording will be processed and you\'ll receive the transcript via email within 15 minutes.';
+      }
+      
+      elements.confirmModal.style.display = 'flex';
+    }
+
+    function hideConfirmModal() {
+      elements.confirmModal.style.display = 'none';
+    }
+
+    async function finishRecording() {
+      hideConfirmModal();
+      
+      // Stop recording
+      clearInterval(state.timerInterval);
+      clearInterval(state.waveformInterval);
+      
+      state.mediaRecorder.stop();
+      
+      // Wait for final data
+      await new Promise(resolve => {
+        state.mediaRecorder.onstop = resolve;
+      });
+
+      // Stop all tracks
+      state.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      
+      if (state.audioContext) {
+        state.audioContext.close();
+      }
+
+      showScreen('uploading');
+
+      // Create audio blob and upload
+      const audioBlob = new Blob(state.audioChunks, { type: 'audio/webm' });
+      await uploadRecording(audioBlob);
+    }
+
+    async function uploadRecording(audioBlob) {
+      try {
+        // Convert blob to base64
+        const base64Audio = await blobToBase64(audioBlob);
+        
+        const payload = {
+          agentName: state.user.name,
+          clientName: state.clientName,
+          appointmentType: state.appointmentType,
+          date: new Date().toISOString().split('T')[0],
+          notes: state.notes,
+          userEmail: state.user.email,
+          tcName: state.selectedTC.name,
+          tcEmail: state.selectedTC.email,
+          audio: base64Audio.split(',')[1] // Remove data URL prefix
+        };
+
+        const response = await fetch(CONFIG.appsScriptUrl, {
+          method: 'POST',
+          mode: 'no-cors', // Apps Script requires this
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload)
+        });
+
+        // Due to no-cors, we can't read the response, but if we get here, it likely worked
+        showScreen('success');
+
+      } catch (error) {
+        console.error('Upload error:', error);
+        alert('Upload failed. Please try again or contact support.');
+        showScreen('setup');
+      }
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    function resetForNewRecording() {
+      state.clientName = '';
+      state.appointmentType = '';
+      state.selectedTC = null;
+      state.notes = '';
+      state.audioChunks = [];
+      
+      elements.clientName.value = '';
+      elements.tcSelect.value = '';
+      elements.notes.value = '';
+      document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('selected'));
+      elements.startRecordingBtn.disabled = true;
+      
+      showScreen('setup');
+    }
+
+    // ============================================
+    // Event Listeners
+    // ============================================
+    
+    elements.loginBtn.addEventListener('click', login);
+    elements.loginPassword.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') login();
+    });
+    elements.loginEmail.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') elements.loginPassword.focus();
+    });
+    elements.logoutBtn.addEventListener('click', logout);
+
+    document.querySelectorAll('.type-btn').forEach(btn => {
+      btn.addEventListener('click', () => selectAppointmentType(btn.dataset.type));
+    });
+
+    elements.clientName.addEventListener('input', validateForm);
+    elements.tcSelect.addEventListener('change', validateForm);
+
+    elements.startRecordingBtn.addEventListener('click', startRecording);
+    elements.pauseResumeBtn.addEventListener('click', togglePauseResume);
+    elements.finishBtn.addEventListener('click', showFinishConfirmation);
+    elements.modalCancel.addEventListener('click', hideConfirmModal);
+    elements.modalConfirm.addEventListener('click', finishRecording);
+    elements.newRecordingBtn.addEventListener('click', resetForNewRecording);
+
+    // ============================================
+    // Initialize
+    // ============================================
+    
+    populateTCDropdown();
+    checkStoredLogin();
+  </script>
+</body>
+</html>
