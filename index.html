@@ -557,6 +557,97 @@
       margin: 20px 0;
     }
 
+    /* ============================================ */
+    /* Offline / Queue Styles                       */
+    /* ============================================ */
+
+    .offline-banner {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fca5a5;
+    }
+
+    .offline-banner.visible {
+      display: flex;
+    }
+
+    .offline-dot {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .queue-banner {
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #fde68a;
+    }
+
+    .queue-banner.visible {
+      display: flex;
+    }
+
+    .queue-banner-text {
+      flex: 1;
+    }
+
+    .queue-retry-btn {
+      background: rgba(251, 191, 36, 0.3);
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      border-radius: 8px;
+      color: #fde68a;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .queue-retry-btn:hover {
+      background: rgba(251, 191, 36, 0.5);
+    }
+
+    .queue-retry-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .saved-offline-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 40px rgba(251, 191, 36, 0.3);
+    }
+
+    .saved-offline-icon svg {
+      width: 50px;
+      height: 50px;
+      fill: var(--wir-black);
+    }
+
     /* Responsive */
     @media (max-width: 380px) {
       .timer {
@@ -572,11 +663,23 @@
 <body>
   <div class="container">
     
+    <!-- Offline Banner (persistent, shown on any screen when offline) -->
+    <div id="offlineBanner" class="offline-banner">
+      <div class="offline-dot"></div>
+      <span>No internet connection — recordings will be saved locally</span>
+    </div>
+
+    <!-- Queue Banner (shown when there are pending uploads) -->
+    <div id="queueBanner" class="queue-banner">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <span class="queue-banner-text" id="queueBannerText">1 recording waiting to upload</span>
+      <button class="queue-retry-btn" id="queueRetryBtn" onclick="retryQueuedUploads()">Retry</button>
+    </div>
+
     <!-- Login Screen -->
     <div id="loginScreen" class="screen active">
       <div class="header" style="padding-top: 60px;">
-<!-- WIR Logo SVG -->
-<img src="WIR LOGO.png" alt="WIR Logo" style="width: 220px; margin: 0 auto 20px; display: block;">
+        <img src="WIR LOGO.png" alt="WIR Logo" style="width: 220px; margin: 0 auto 20px; display: block;">
         <h1>Appointment Notetaker</h1>
         <p>Transcribe your listing appointments</p>
       </div>
@@ -615,7 +718,7 @@
         <div class="user-avatar" id="userAvatar">A</div>
         <div class="user-info">
           <div class="user-name" id="userName">Agent Name</div>
-          <div class="user-email" id="userEmailDisplay">agent@email.com</div>
+          <div class="user-email" id="userEmailDisplay">agent@example.com</div>
         </div>
         <button class="logout-btn" id="logoutBtn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -710,8 +813,8 @@
     <div id="uploadingScreen" class="screen">
       <div class="success-screen">
         <div class="spinner" style="width: 60px; height: 60px; border-width: 4px; margin-bottom: 24px;"></div>
-        <h2>Uploading...</h2>
-        <p>Please wait while we upload your recording.</p>
+        <h2 id="uploadingTitle">Uploading...</h2>
+        <p id="uploadingMessage">Please wait while we upload your recording.</p>
       </div>
     </div>
 
@@ -730,6 +833,22 @@
       </div>
     </div>
 
+    <!-- Saved Offline Screen -->
+    <div id="savedOfflineScreen" class="screen">
+      <div class="success-screen">
+        <div class="saved-offline-icon">
+          <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45C23.16 18.16 24 16.68 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.15 0 10.77 0 14c0 3.31 2.69 6 6 6h11.73l2 2 1.27-1.27L4.27 4 3 5.27zM7.73 10l8 8H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h1.73z"/></svg>
+        </div>
+        <h2>Saved Locally</h2>
+        <p>No internet connection. Your recording has been saved to this device and will upload automatically when you're back online.</p>
+        <p style="font-size: 13px; opacity: 0.6; margin-bottom: 24px;">Keep your browser open or come back to this page later.</p>
+        <button id="newRecordingOfflineBtn" class="btn btn-success">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Start New Recording
+        </button>
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -740,12 +859,15 @@
     const CONFIG = {
       appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzNbvlZCTMCPKYbPQJ5pvgS66iKN8naDqG09ATA7EmNHzmPBTaKLmWQ4SGYC13GdPP4Pw/exec',
       password: '#ONESTEPAHEAD2026',
-     teamMembers: [
-  { name: 'Tanya Wohleb', email: 'tanya.wohleb@wattersinternational.com' },
-  { name: 'Debbie Lopez', email: 'debbie.lopez@wattersinternational.com' },
-  { name: 'Tracy Hykel', email: 'tracy.hykel@wattersinternational.com' },
-  { name: 'Jodi Raughton', email: 'jodi.raughton@wattersinternational.com' }
-]
+      teamMembers: [
+        { name: 'Tanya Wohleb', email: 'tanya.wohleb@wattersinternational.com' },
+        { name: 'Debbie Lopez', email: 'debbie.lopez@wattersinternational.com' },
+        { name: 'Tracy Hykel', email: 'tracy.hykel@wattersinternational.com' },
+        { name: 'Jodi Raughton', email: 'jodi.raughton@wattersinternational.com' }
+      ],
+      dbName: 'WIR_RecorderDB',
+      dbVersion: 1,
+      storeName: 'pendingUploads'
     };
 
     // ============================================
@@ -763,12 +885,17 @@
       recordingStartTime: null,
       elapsedTime: 0,
       pausedTime: 0,
+      pauseStartTime: null,
       mediaRecorder: null,
       audioChunks: [],
       timerInterval: null,
       waveformInterval: null,
       audioContext: null,
-      analyser: null
+      analyser: null,
+      wakeLock: null,
+      isOnline: navigator.onLine,
+      isUploading: false,
+      db: null
     };
 
     // ============================================
@@ -780,7 +907,8 @@
       setup: document.getElementById('setupScreen'),
       recording: document.getElementById('recordingScreen'),
       uploading: document.getElementById('uploadingScreen'),
-      success: document.getElementById('successScreen')
+      success: document.getElementById('successScreen'),
+      savedOffline: document.getElementById('savedOfflineScreen')
     };
 
     const elements = {
@@ -812,8 +940,171 @@
       modalMessage: document.getElementById('modalMessage'),
       modalCancel: document.getElementById('modalCancel'),
       modalConfirm: document.getElementById('modalConfirm'),
-      newRecordingBtn: document.getElementById('newRecordingBtn')
+      newRecordingBtn: document.getElementById('newRecordingBtn'),
+      newRecordingOfflineBtn: document.getElementById('newRecordingOfflineBtn'),
+      offlineBanner: document.getElementById('offlineBanner'),
+      queueBanner: document.getElementById('queueBanner'),
+      queueBannerText: document.getElementById('queueBannerText'),
+      queueRetryBtn: document.getElementById('queueRetryBtn'),
+      uploadingTitle: document.getElementById('uploadingTitle'),
+      uploadingMessage: document.getElementById('uploadingMessage')
     };
+
+    // ============================================
+    // IndexedDB — Offline Storage
+    // ============================================
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(CONFIG.dbName, CONFIG.dbVersion);
+        
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(CONFIG.storeName)) {
+            const store = db.createObjectStore(CONFIG.storeName, { keyPath: 'id', autoIncrement: true });
+            store.createIndex('createdAt', 'createdAt', { unique: false });
+          }
+        };
+
+        request.onsuccess = (event) => {
+          state.db = event.target.result;
+          resolve(state.db);
+        };
+
+        request.onerror = (event) => {
+          console.error('IndexedDB error:', event.target.error);
+          reject(event.target.error);
+        };
+      });
+    }
+
+    async function saveToQueue(payload, audioBlob) {
+      const db = state.db || await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(CONFIG.storeName, 'readwrite');
+        const store = tx.objectStore(CONFIG.storeName);
+        
+        const record = {
+          payload: payload,
+          audioBlob: audioBlob,
+          createdAt: new Date().toISOString(),
+          retries: 0
+        };
+
+        const request = store.add(record);
+        request.onsuccess = () => {
+          console.log('Recording saved to offline queue, id:', request.result);
+          resolve(request.result);
+        };
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function getQueuedRecordings() {
+      const db = state.db || await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(CONFIG.storeName, 'readonly');
+        const store = tx.objectStore(CONFIG.storeName);
+        const request = store.getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function removeFromQueue(id) {
+      const db = state.db || await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(CONFIG.storeName, 'readwrite');
+        const store = tx.objectStore(CONFIG.storeName);
+        const request = store.delete(id);
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function getQueueCount() {
+      const db = state.db || await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(CONFIG.storeName, 'readonly');
+        const store = tx.objectStore(CONFIG.storeName);
+        const request = store.count();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    // ============================================
+    // Online / Offline Detection
+    // ============================================
+
+    function updateOnlineStatus() {
+      state.isOnline = navigator.onLine;
+      
+      if (state.isOnline) {
+        elements.offlineBanner.classList.remove('visible');
+        // Auto-retry queued uploads when back online
+        retryQueuedUploads();
+      } else {
+        elements.offlineBanner.classList.add('visible');
+      }
+    }
+
+    async function updateQueueBanner() {
+      try {
+        const count = await getQueueCount();
+        if (count > 0) {
+          elements.queueBannerText.textContent = 
+            count === 1 
+              ? '1 recording waiting to upload' 
+              : `${count} recordings waiting to upload`;
+          elements.queueBanner.classList.add('visible');
+        } else {
+          elements.queueBanner.classList.remove('visible');
+        }
+      } catch (e) {
+        console.error('Error checking queue:', e);
+      }
+    }
+
+    async function retryQueuedUploads() {
+      if (state.isUploading || !navigator.onLine) return;
+      
+      state.isUploading = true;
+      elements.queueRetryBtn.disabled = true;
+      elements.queueRetryBtn.textContent = 'Uploading...';
+
+      try {
+        const recordings = await getQueuedRecordings();
+        
+        for (const record of recordings) {
+          if (!navigator.onLine) break;
+          
+          try {
+            const base64Audio = await blobToBase64(record.audioBlob);
+            const fullPayload = { ...record.payload, audio: base64Audio.split(',')[1] };
+
+            const response = await fetch(CONFIG.appsScriptUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain' },
+              body: JSON.stringify(fullPayload)
+            });
+
+            await removeFromQueue(record.id);
+            console.log('Queued recording uploaded successfully, id:', record.id);
+
+          } catch (err) {
+            console.warn('Failed to upload queued recording id:', record.id, err);
+          }
+        }
+      } catch (e) {
+        console.error('Error processing queue:', e);
+      } finally {
+        state.isUploading = false;
+        elements.queueRetryBtn.disabled = false;
+        elements.queueRetryBtn.textContent = 'Retry';
+        updateQueueBanner();
+      }
+    }
 
     // ============================================
     // Screen Navigation
@@ -920,15 +1211,16 @@
     // ============================================
     
     async function startRecording() {
-     // Request wake lock to prevent screen from turning off
-if ('wakeLock' in navigator) {
-  try {
-    state.wakeLock = await navigator.wakeLock.request('screen');
-    console.log('Wake lock active');
-  } catch (err) {
-    console.log('Wake lock failed:', err);
-  }
-}
+      // Request wake lock to prevent screen from turning off
+      if ('wakeLock' in navigator) {
+        try {
+          state.wakeLock = await navigator.wakeLock.request('screen');
+          console.log('Wake lock active');
+        } catch (err) {
+          console.log('Wake lock failed:', err);
+        }
+      }
+
       state.clientName = elements.clientName.value.trim();
       state.selectedTC = JSON.parse(elements.tcSelect.value);
       state.notes = elements.notes.value.trim();
@@ -966,7 +1258,7 @@ if ('wakeLock' in navigator) {
           }
         };
 
-        state.mediaRecorder.start(1000); // Collect data every second
+        state.mediaRecorder.start(1000);
         state.isRecording = true;
         state.isPaused = false;
         state.recordingStartTime = Date.now();
@@ -1001,7 +1293,6 @@ if ('wakeLock' in navigator) {
       elements.timer.textContent = 
         `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-      // Show warning if under 15 minutes
       const isShort = totalSeconds < 15 * 60;
       elements.shortRecordingWarning.style.display = isShort ? 'flex' : 'none';
     }
@@ -1028,7 +1319,6 @@ if ('wakeLock' in navigator) {
 
     function togglePauseResume() {
       if (state.isPaused) {
-        // Resume
         state.mediaRecorder.resume();
         state.isPaused = false;
         state.pausedTime += Date.now() - state.pauseStartTime;
@@ -1041,7 +1331,6 @@ if ('wakeLock' in navigator) {
         elements.pauseIcon.style.display = 'block';
         elements.playIcon.style.display = 'none';
       } else {
-        // Pause
         state.mediaRecorder.pause();
         state.isPaused = true;
         state.pauseStartTime = Date.now();
@@ -1075,10 +1364,10 @@ if ('wakeLock' in navigator) {
 
     async function finishRecording() {
       // Release wake lock
-if (state.wakeLock) {
-  state.wakeLock.release();
-  state.wakeLock = null;
-}
+      if (state.wakeLock) {
+        state.wakeLock.release();
+        state.wakeLock = null;
+      }
       hideConfirmModal();
       
       // Stop recording
@@ -1099,43 +1388,71 @@ if (state.wakeLock) {
         state.audioContext.close();
       }
 
-      showScreen('uploading');
-
-      // Create audio blob and upload
+      // Create audio blob
       const audioBlob = new Blob(state.audioChunks, { type: 'audio/webm' });
-      await uploadRecording(audioBlob);
+
+      // Build metadata payload (audio added at upload time)
+      const payload = {
+        agentName: state.user.name,
+        clientName: state.clientName,
+        appointmentType: state.appointmentType,
+        date: new Date().toISOString().split('T')[0],
+        notes: state.notes,
+        userEmail: state.user.email,
+        tcName: state.selectedTC.name,
+        tcEmail: state.selectedTC.email
+      };
+
+      await uploadRecording(payload, audioBlob);
     }
 
-    async function uploadRecording(audioBlob) {
-      try {
-        // Convert blob to base64
-        const base64Audio = await blobToBase64(audioBlob);
-        
-        const payload = {
-          agentName: state.user.name,
-          clientName: state.clientName,
-          appointmentType: state.appointmentType,
-          date: new Date().toISOString().split('T')[0],
-          notes: state.notes,
-          userEmail: state.user.email,
-          tcName: state.selectedTC.name,
-          tcEmail: state.selectedTC.email,
-          audio: base64Audio.split(',')[1] // Remove data URL prefix
-        };
+    async function uploadRecording(payload, audioBlob) {
+      // If offline, save immediately without showing uploading spinner
+      if (!navigator.onLine) {
+        await saveOffline(payload, audioBlob);
+        return;
+      }
 
-       const response = await fetch(CONFIG.appsScriptUrl, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'text/plain',
-  },
-  body: JSON.stringify(payload)
-});
-        // Due to no-cors, we can't read the response, but if we get here, it likely worked
+      // Show uploading screen
+      elements.uploadingTitle.textContent = 'Uploading...';
+      elements.uploadingMessage.textContent = 'Please wait while we upload your recording.';
+      showScreen('uploading');
+
+      try {
+        const base64Audio = await blobToBase64(audioBlob);
+        const fullPayload = { ...payload, audio: base64Audio.split(',')[1] };
+
+        const response = await fetch(CONFIG.appsScriptUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(fullPayload)
+        });
+
+        // If fetch didn't throw, assume success
         showScreen('success');
 
       } catch (error) {
-        console.error('Upload error:', error);
-        alert('Upload failed. Please try again or contact support.');
+        console.error('Upload failed, saving offline:', error);
+        await saveOffline(payload, audioBlob);
+      }
+    }
+
+    async function saveOffline(payload, audioBlob) {
+      try {
+        elements.uploadingTitle.textContent = 'Saving locally...';
+        elements.uploadingMessage.textContent = 'No connection detected. Saving your recording to this device.';
+        showScreen('uploading');
+
+        await saveToQueue(payload, audioBlob);
+        await updateQueueBanner();
+
+        setTimeout(() => {
+          showScreen('savedOffline');
+        }, 800);
+
+      } catch (err) {
+        console.error('Failed to save offline:', err);
+        alert('Error saving recording. Please try again or contact support.');
         showScreen('setup');
       }
     }
@@ -1166,6 +1483,19 @@ if (state.wakeLock) {
     }
 
     // ============================================
+    // Service Worker Registration (optional PWA)
+    // ============================================
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => {
+        console.log('Service worker registered');
+      }).catch(err => {
+        // sw.js not present is fine — offline queue still works via IndexedDB
+        console.log('Service worker registration skipped:', err.message);
+      });
+    }
+
+    // ============================================
     // Event Listeners
     // ============================================
     
@@ -1191,13 +1521,31 @@ if (state.wakeLock) {
     elements.modalCancel.addEventListener('click', hideConfirmModal);
     elements.modalConfirm.addEventListener('click', finishRecording);
     elements.newRecordingBtn.addEventListener('click', resetForNewRecording);
+    elements.newRecordingOfflineBtn.addEventListener('click', resetForNewRecording);
+
+    // Online / Offline listeners
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
 
     // ============================================
-    // Initialize
+    // Init
     // ============================================
     
-    populateTCDropdown();
-    checkStoredLogin();
+    async function init() {
+      await openDB();
+      populateTCDropdown();
+      checkStoredLogin();
+      updateOnlineStatus();
+      updateQueueBanner();
+
+      // Request persistent storage so the browser won't evict offline recordings
+      if (navigator.storage && navigator.storage.persist) {
+        const granted = await navigator.storage.persist();
+        console.log('Persistent storage:', granted ? 'granted' : 'denied');
+      }
+    }
+
+    init();
   </script>
 </body>
 </html>
