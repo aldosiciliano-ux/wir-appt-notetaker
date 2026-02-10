@@ -279,149 +279,91 @@
     }
 
     .wave-bar {
-      width: 4px;
-      background: var(--gradient-blue);
-      border-radius: 2px;
-      transition: height 0.1s;
+      width: 6px;
+      background: var(--gradient-wir);
+      border-radius: 3px;
+      transition: height 0.1s ease;
     }
 
     .recording-info {
       text-align: center;
       margin-bottom: 40px;
-      opacity: 0.8;
+    }
+
+    .recording-info h3 {
+      font-size: 20px;
+      margin-bottom: 4px;
     }
 
     .recording-info p {
       font-size: 14px;
-      margin-bottom: 4px;
+      opacity: 0.7;
     }
 
-    .recording-info strong {
-      color: var(--wir-blue-light);
-    }
-
-    .recording-controls {
+    /* Control Buttons */
+    .control-buttons {
       display: flex;
-      gap: 20px;
-      align-items: center;
+      gap: 16px;
+      width: 100%;
+      max-width: 300px;
     }
 
-    .record-btn {
-      width: 80px;
-      height: 80px;
+    .control-btn {
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       border: none;
       cursor: pointer;
-      transition: all 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.2s;
     }
 
-    .record-btn.pause {
-      background: var(--gradient-blue);
+    .control-btn.pause {
+      background: rgba(255, 255, 255, 0.15);
+      flex: 1;
     }
 
-    .record-btn.resume {
-      background: linear-gradient(135deg, var(--wir-green) 0%, #8BC02A 100%);
+    .control-btn.resume {
+      background: var(--wir-green);
+      flex: 1;
     }
 
-    .record-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 8px 25px rgba(91, 196, 241, 0.4);
+    .control-btn.finish {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      flex: 1;
     }
 
-    .record-btn svg {
-      width: 32px;
-      height: 32px;
+    .control-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .control-btn svg {
+      width: 28px;
+      height: 28px;
       fill: var(--wir-white);
     }
 
-    .record-btn.resume svg {
-      fill: var(--wir-black);
-    }
-
-    .finish-btn {
-      padding: 16px 32px;
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      border: none;
-      border-radius: 40px;
-      color: var(--wir-white);
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .finish-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
-    }
-
-    /* Warning Banner */
-    .warning-banner {
-      background: rgba(164, 210, 51, 0.15);
-      border: 1px solid rgba(164, 210, 51, 0.4);
-      border-radius: 12px;
+    /* Short Recording Warning */
+    .short-recording-warning {
+      display: none;
+      align-items: center;
+      gap: 8px;
       padding: 12px 16px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 14px;
+      background: rgba(251, 191, 36, 0.2);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      border-radius: 12px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #fbbf24;
     }
 
-    .warning-banner svg {
-      width: 24px;
-      height: 24px;
-      fill: var(--wir-green);
+    .short-recording-warning svg {
+      width: 20px;
+      height: 20px;
+      fill: #fbbf24;
       flex-shrink: 0;
-    }
-
-    /* Confirmation Modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 100;
-    }
-
-    .modal {
-      background: #111;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 28px;
-      max-width: 360px;
-      width: 100%;
-      text-align: center;
-    }
-
-    .modal h3 {
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
-
-    .modal p {
-      font-size: 14px;
-      opacity: 0.8;
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-    }
-
-    .modal-buttons .btn {
-      flex: 1;
     }
 
     /* Success Screen */
@@ -438,13 +380,12 @@
     .success-icon {
       width: 100px;
       height: 100px;
-      background: linear-gradient(135deg, var(--wir-green) 0%, #8BC02A 100%);
+      background: var(--wir-green);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 24px;
-      box-shadow: 0 10px 40px rgba(164, 210, 51, 0.3);
     }
 
     .success-icon svg {
@@ -462,21 +403,91 @@
       font-size: 16px;
       opacity: 0.8;
       margin-bottom: 32px;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
-    /* Loading Spinner */
+    /* Uploading Screen */
+    .uploading-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
     .spinner {
-      width: 24px;
-      height: 24px;
-      border: 3px solid rgba(255, 255, 255, 0.2);
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
       border-top-color: var(--wir-blue-light);
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: spin 1s linear infinite;
+      margin-bottom: 24px;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    .uploading-screen h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .uploading-screen p {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    /* Progress Bar */
+    .upload-progress {
+      width: 100%;
+      max-width: 280px;
+      margin-top: 20px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--gradient-blue);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .progress-text {
+      font-size: 13px;
+      opacity: 0.7;
+      text-align: center;
+    }
+
+    /* Login Screen */
+    .login-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-error {
+      display: none;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
     }
 
     /* User Badge */
@@ -484,23 +495,22 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.08);
       padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
       margin-bottom: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .user-avatar {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       background: var(--gradient-blue);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .user-info {
@@ -514,348 +524,1159 @@
 
     .user-email {
       font-size: 13px;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
     .logout-btn {
-      background: none;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.1);
       border: none;
-      color: rgba(255, 255, 255, 0.5);
-      cursor: pointer;
-      padding: 8px;
-      transition: color 0.2s;
-    }
-
-    .logout-btn:hover {
+      border-radius: 8px;
       color: var(--wir-white);
+      font-size: 13px;
+      cursor: pointer;
     }
 
-    /* Hide screens by default */
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 340px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .modal-message {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-buttons .btn {
+      flex: 1;
+      padding: 14px;
+    }
+
+    /* Screen visibility */
     .screen {
       display: none;
       flex-direction: column;
-      flex: 1;
+      min-height: 100vh;
     }
 
     .screen.active {
       display: flex;
     }
 
-    /* Accent text */
-    .text-accent {
-      color: var(--wir-blue-light);
-    }
-
-    .text-green {
-      color: var(--wir-green);
-    }
-
-    /* Divider */
-    .divider {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.1);
-      margin: 20px 0;
-    }
-
-    /* ============================================ */
-    /* Offline / Queue Styles                       */
-    /* ============================================ */
-
+    /* Offline Banner */
     .offline-banner {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      border-radius: 12px;
-      padding: 10px 16px;
-      margin-bottom: 16px;
       display: none;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #dc2626;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 14px;
       font-weight: 500;
-      color: #fca5a5;
+      z-index: 1000;
     }
 
     .offline-banner.visible {
-      display: flex;
+      display: block;
     }
 
-    .offline-dot {
-      width: 8px;
-      height: 8px;
-      background: #ef4444;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
+    /* Queue Banner */
     .queue-banner {
-      background: rgba(251, 191, 36, 0.15);
-      border: 1px solid rgba(251, 191, 36, 0.4);
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 16px;
       display: none;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: #fde68a;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #d97706;
+      color: white;
+      padding: 12px 20px;
+      z-index: 1000;
     }
 
     .queue-banner.visible {
       display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .queue-banner-text {
-      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
     }
 
     .queue-retry-btn {
-      background: rgba(251, 191, 36, 0.3);
-      border: 1px solid rgba(251, 191, 36, 0.5);
-      border-radius: 8px;
-      color: #fde68a;
-      font-size: 12px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 13px;
       font-weight: 600;
-      padding: 6px 12px;
       cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .queue-retry-btn:hover {
-      background: rgba(251, 191, 36, 0.5);
     }
 
     .queue-retry-btn:disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
+    }
+
+    /* Saved Offline Screen */
+    .saved-offline-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
     }
 
     .saved-offline-icon {
       width: 100px;
       height: 100px;
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      background: #d97706;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 24px;
-      box-shadow: 0 10px 40px rgba(251, 191, 36, 0.3);
     }
 
     .saved-offline-icon svg {
       width: 50px;
       height: 50px;
-      fill: var(--wir-black);
+      fill: var(--wir-white);
     }
 
-    /* Responsive */
-    @media (max-width: 380px) {
-      .timer {
-        font-size: 48px;
-      }
-      
-      .type-grid {
-        grid-template-columns: 1fr;
-      }
+    .saved-offline-screen h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .saved-offline-screen p {
+      font-size: 16px;
+      opacity: 0.8;
+      margin-bottom: 32px;
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    
-    <!-- Offline Banner (persistent, shown on any screen when offline) -->
-    <div id="offlineBanner" class="offline-banner">
-      <div class="offline-dot"></div>
-      <span>No internet connection — recordings will be saved locally</span>
-    </div>
 
-    <!-- Queue Banner (shown when there are pending uploads) -->
-    <div id="queueBanner" class="queue-banner">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-      <span class="queue-banner-text" id="queueBannerText">1 recording waiting to upload</span>
-      <button class="queue-retry-btn" id="queueRetryBtn" onclick="retryQueuedUploads()">Retry</button>
-    </div>
+<div class="offline-banner" id="offlineBanner">
+  📡 No internet connection – recordings will be saved locally
+</div>
 
-    <!-- Login Screen -->
-    <div id="loginScreen" class="screen active">
-      <div class="header" style="padding-top: 60px;">
-        <img src="WIR LOGO.png" alt="WIR Logo" style="width: 220px; margin: 0 auto 20px; display: block;">
-        <h1>Appointment Notetaker</h1>
-        <p>Transcribe your listing appointments</p>
+<div class="queue-banner" id="queueBanner">
+  <span class="queue-banner-text" id="queueBannerText">1 recording waiting to upload</span>
+  <button class="queue-retry-btn" id="queueRetryBtn">Retry</button>
+</div>
+
+<div class="container">
+
+  <!-- LOGIN SCREEN -->
+  <div class="screen active" id="loginScreen">
+    <div class="login-screen">
+      <div class="header">
+        <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="48" fill="url(#grad1)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+          <path d="M30 50 L45 65 L70 35" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#5BC4F1"/>
+              <stop offset="50%" style="stop-color:#1E5F99"/>
+              <stop offset="100%" style="stop-color:#A4D233"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <h1>WIR Appointment Notetaker</h1>
+        <p>Sign in to start recording</p>
       </div>
-      
-      <div class="card" style="margin-top: 20px;">
-        <div class="card-title">Sign In</div>
+
+      <div class="card">
+        <div class="login-error" id="loginError"></div>
         
         <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input type="email" id="loginEmail" class="form-input" placeholder="you@wattersinternational.com">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="loginEmail" placeholder="your.name@wattersinternational.com" autocomplete="email">
         </div>
         
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input type="password" id="loginPassword" class="form-input" placeholder="Enter password">
+          <input type="password" class="form-input" id="loginPassword" placeholder="Enter password" autocomplete="current-password">
         </div>
         
-        <button id="loginBtn" class="btn btn-primary">Sign In</button>
-        
-        <p id="loginError" style="color: #ef4444; font-size: 14px; margin-top: 12px; text-align: center; display: none;"></p>
+        <button class="btn btn-primary" id="loginBtn">
+          Sign In
+        </button>
       </div>
-      
-      <p style="text-align: center; font-size: 12px; opacity: 0.4; margin-top: auto; padding: 20px;">
-        Watters International Realty
-      </p>
+    </div>
+  </div>
+
+  <!-- SETUP SCREEN -->
+  <div class="screen" id="setupScreen">
+    <div class="header">
+      <h1>New Recording</h1>
+      <p>Fill in the appointment details</p>
     </div>
 
-    <!-- Setup Screen -->
-    <div id="setupScreen" class="screen">
-      <div class="header">
-        <h1>New Recording</h1>
-        <p>Enter appointment details</p>
+    <div class="user-badge">
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div class="user-info">
+        <div class="user-name" id="userName">Agent Name</div>
+        <div class="user-email" id="userEmailDisplay">email@wir.com</div>
       </div>
-      
-      <div class="user-badge">
-        <div class="user-avatar" id="userAvatar">A</div>
-        <div class="user-info">
-          <div class="user-name" id="userName">Agent Name</div>
-          <div class="user-email" id="userEmailDisplay">agent@example.com</div>
+      <button class="logout-btn" id="logoutBtn">Sign Out</button>
+    </div>
+
+    <div class="card">
+      <div class="form-group">
+        <label class="form-label">Client Name</label>
+        <input type="text" class="form-input" id="clientName" placeholder="Enter client's full name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Appointment Type</label>
+        <div class="type-grid">
+          <button class="type-btn" data-type="Listing Appointment">Listing</button>
+          <button class="type-btn" data-type="Buyer Consultation">Buyer Consult</button>
+          <button class="type-btn" data-type="Follow-up">Follow-up</button>
+          <button class="type-btn" data-type="Other">Other</button>
         </div>
-        <button class="logout-btn" id="logoutBtn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Transaction Coordinator</label>
+        <select class="form-input" id="tcSelect">
+          <option value="">Select TC...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes (Optional)</label>
+        <input type="text" class="form-input" id="notes" placeholder="Any additional context">
+      </div>
+
+      <button class="btn btn-success" id="startRecordingBtn" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="12" r="8"/>
+        </svg>
+        Start Recording
+      </button>
+    </div>
+  </div>
+
+  <!-- RECORDING SCREEN -->
+  <div class="screen" id="recordingScreen">
+    <div class="recording-screen">
+      <div class="recording-status">
+        <div class="recording-dot" id="recordingDot"></div>
+        <span id="recordingStatusText">Recording</span>
+      </div>
+
+      <div class="timer" id="timer">00:00:00</div>
+
+      <div class="waveform" id="waveform"></div>
+
+      <div class="recording-info">
+        <h3 id="recordingClient">Client Name</h3>
+        <p id="recordingType">Appointment Type</p>
+      </div>
+
+      <div class="control-buttons">
+        <button class="control-btn pause" id="pauseResumeBtn">
+          <svg id="pauseIcon" viewBox="0 0 24 24">
+            <rect x="6" y="4" width="4" height="16"/>
+            <rect x="14" y="4" width="4" height="16"/>
+          </svg>
+          <svg id="playIcon" style="display: none;" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <button class="control-btn finish" id="finishBtn">
+          <svg viewBox="0 0 24 24">
+            <rect x="6" y="6" width="12" height="12" rx="2"/>
           </svg>
         </button>
       </div>
+
+      <div class="short-recording-warning" id="shortRecordingWarning">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <span>Recording is under 15 minutes</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPLOADING SCREEN -->
+  <div class="screen" id="uploadingScreen">
+    <div class="uploading-screen">
+      <div class="spinner"></div>
+      <h2 id="uploadingTitle">Uploading...</h2>
+      <p id="uploadingMessage">Please wait while we upload your recording.</p>
+      <div class="upload-progress" id="uploadProgress">
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS SCREEN -->
+  <div class="screen" id="successScreen">
+    <div class="success-screen">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+      </div>
+      <h2>Upload Complete!</h2>
+      <p>Your recording has been submitted. You'll receive the transcript via email within 15 minutes.</p>
+      <button class="btn btn-primary" id="newRecordingBtn">Start New Recording</button>
+    </div>
+  </div>
+
+  <!-- SAVED OFFLINE SCREEN -->
+  <div class="screen" id="savedOfflineScreen">
+    <div class="saved-offline-screen">
+      <div class="saved-offline-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+        </svg>
+      </div>
+      <h2>Saved Locally</h2>
+      <p>Your recording is safely stored on this device. It will upload automatically when you're back online.</p>
+      <button class="btn btn-primary" id="newRecordingOfflineBtn">Start New Recording</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal" id="confirmModal">
+  <div class="modal-content">
+    <h3 class="modal-title" id="modalTitle">Finish Recording?</h3>
+    <p class="modal-message" id="modalMessage">Your recording will be processed and you'll receive the transcript via email within 15 minutes.</p>
+    <div class="modal-buttons">
+      <button class="btn btn-secondary" id="modalCancel">Cancel</button>
+      <button class="btn btn-danger" id="modalConfirm">Finish</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================
+  // Configuration
+  // ============================================
+  
+  const CONFIG = {
+    appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzNbvlZCTMCPKYbPQJ5pvgS66iKN8naDqG09ATA7EmNHzmPBTaKLmWQ4SGYC13GdPP4Pw/exec',
+    password: '#ONESTEPAHEAD2026',
+    teamMembers: [
+      { name: 'Tanya Wohleb', email: 'tanya.wohleb@wattersinternational.com' },
+      { name: 'Debbie Lopez', email: 'debbie.lopez@wattersinternational.com' },
+      { name: 'Tracy Hykel', email: 'tracy.hykel@wattersinternational.com' },
+      { name: 'Jodi Raughton', email: 'jodi.raughton@wattersinternational.com' }
+    ],
+    dbName: 'WIRRecorderDB',
+    storeName: 'pendingUploads',
+    // Chunked upload config
+    chunkSize: 4 * 1024 * 1024, // 4MB chunks (safe under Apps Script 50MB limit after base64 encoding)
+    maxRetries: 3
+  };
+
+  // ============================================
+  // State
+  // ============================================
+  
+  const state = {
+    user: null,
+    clientName: '',
+    appointmentType: '',
+    selectedTC: null,
+    notes: '',
+    mediaRecorder: null,
+    audioChunks: [],
+    isRecording: false,
+    isPaused: false,
+    recordingStartTime: null,
+    elapsedTime: 0,
+    pausedTime: 0,
+    pauseStartTime: null,
+    timerInterval: null,
+    waveformInterval: null,
+    audioContext: null,
+    analyser: null,
+    wakeLock: null,
+    db: null,
+    isOnline: navigator.onLine,
+    isUploading: false
+  };
+
+  // ============================================
+  // DOM Elements
+  // ============================================
+  
+  const screens = {
+    login: document.getElementById('loginScreen'),
+    setup: document.getElementById('setupScreen'),
+    recording: document.getElementById('recordingScreen'),
+    uploading: document.getElementById('uploadingScreen'),
+    success: document.getElementById('successScreen'),
+    savedOffline: document.getElementById('savedOfflineScreen')
+  };
+
+  const elements = {
+    loginEmail: document.getElementById('loginEmail'),
+    loginPassword: document.getElementById('loginPassword'),
+    loginBtn: document.getElementById('loginBtn'),
+    loginError: document.getElementById('loginError'),
+    logoutBtn: document.getElementById('logoutBtn'),
+    userAvatar: document.getElementById('userAvatar'),
+    userName: document.getElementById('userName'),
+    userEmailDisplay: document.getElementById('userEmailDisplay'),
+    clientName: document.getElementById('clientName'),
+    tcSelect: document.getElementById('tcSelect'),
+    notes: document.getElementById('notes'),
+    startRecordingBtn: document.getElementById('startRecordingBtn'),
+    timer: document.getElementById('timer'),
+    waveform: document.getElementById('waveform'),
+    recordingClient: document.getElementById('recordingClient'),
+    recordingType: document.getElementById('recordingType'),
+    recordingDot: document.getElementById('recordingDot'),
+    recordingStatusText: document.getElementById('recordingStatusText'),
+    pauseResumeBtn: document.getElementById('pauseResumeBtn'),
+    pauseIcon: document.getElementById('pauseIcon'),
+    playIcon: document.getElementById('playIcon'),
+    finishBtn: document.getElementById('finishBtn'),
+    shortRecordingWarning: document.getElementById('shortRecordingWarning'),
+    confirmModal: document.getElementById('confirmModal'),
+    modalTitle: document.getElementById('modalTitle'),
+    modalMessage: document.getElementById('modalMessage'),
+    modalCancel: document.getElementById('modalCancel'),
+    modalConfirm: document.getElementById('modalConfirm'),
+    newRecordingBtn: document.getElementById('newRecordingBtn'),
+    newRecordingOfflineBtn: document.getElementById('newRecordingOfflineBtn'),
+    uploadingTitle: document.getElementById('uploadingTitle'),
+    uploadingMessage: document.getElementById('uploadingMessage'),
+    offlineBanner: document.getElementById('offlineBanner'),
+    queueBanner: document.getElementById('queueBanner'),
+    queueBannerText: document.getElementById('queueBannerText'),
+    queueRetryBtn: document.getElementById('queueRetryBtn'),
+    uploadProgress: document.getElementById('uploadProgress'),
+    progressBar: document.getElementById('progressBar'),
+    progressText: document.getElementById('progressText')
+  };
+
+  // ============================================
+  // IndexedDB for Offline Queue
+  // ============================================
+
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      if (state.db) {
+        resolve(state.db);
+        return;
+      }
+      const request = indexedDB.open(CONFIG.dbName, 1);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        state.db = request.result;
+        resolve(state.db);
+      };
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains(CONFIG.storeName)) {
+          db.createObjectStore(CONFIG.storeName, { keyPath: 'id', autoIncrement: true });
+        }
+      };
+    });
+  }
+
+  async function saveToQueue(payload, audioBlob) {
+    const db = state.db || await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(CONFIG.storeName, 'readwrite');
+      const store = tx.objectStore(CONFIG.storeName);
+      const record = {
+        payload,
+        audioBlob,
+        createdAt: new Date().toISOString()
+      };
+      const request = store.add(record);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function getQueuedRecordings() {
+    const db = state.db || await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(CONFIG.storeName, 'readonly');
+      const store = tx.objectStore(CONFIG.storeName);
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function removeFromQueue(id) {
+    const db = state.db || await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(CONFIG.storeName, 'readwrite');
+      const store = tx.objectStore(CONFIG.storeName);
+      const request = store.delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function getQueueCount() {
+    const db = state.db || await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(CONFIG.storeName, 'readonly');
+      const store = tx.objectStore(CONFIG.storeName);
+      const request = store.count();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  // ============================================
+  // Online / Offline Detection
+  // ============================================
+
+  function updateOnlineStatus() {
+    state.isOnline = navigator.onLine;
+    
+    if (state.isOnline) {
+      elements.offlineBanner.classList.remove('visible');
+      retryQueuedUploads();
+    } else {
+      elements.offlineBanner.classList.add('visible');
+    }
+  }
+
+  async function updateQueueBanner() {
+    try {
+      const count = await getQueueCount();
+      if (count > 0) {
+        elements.queueBannerText.textContent = 
+          count === 1 
+            ? '1 recording waiting to upload' 
+            : `${count} recordings waiting to upload`;
+        elements.queueBanner.classList.add('visible');
+      } else {
+        elements.queueBanner.classList.remove('visible');
+      }
+    } catch (e) {
+      console.error('Error checking queue:', e);
+    }
+  }
+
+  async function retryQueuedUploads() {
+    if (state.isUploading || !navigator.onLine) return;
+    
+    state.isUploading = true;
+    elements.queueRetryBtn.disabled = true;
+    elements.queueRetryBtn.textContent = 'Uploading...';
+
+    try {
+      const recordings = await getQueuedRecordings();
       
-      <div class="card">
-        <div class="form-group">
-          <label class="form-label">Client Name <span class="text-accent">*</span></label>
-          <input type="text" id="clientName" class="form-input" placeholder="Enter client name">
-        </div>
+      for (const record of recordings) {
+        if (!navigator.onLine) break;
         
-        <div class="form-group">
-          <label class="form-label">Appointment Type <span class="text-accent">*</span></label>
-          <div class="type-grid">
-            <button class="type-btn" data-type="Listing Appointment">Listing Appointment</button>
-            <button class="type-btn" data-type="Buyer Consultation">Buyer Consultation</button>
-            <button class="type-btn" data-type="Follow-up">Follow-up</button>
-            <button class="type-btn" data-type="Other">Other</button>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Transaction Coordinator <span class="text-accent">*</span></label>
-          <select id="tcSelect" class="form-input">
-            <option value="">Select TC...</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Notes <span style="opacity: 0.5;">(optional)</span></label>
-          <input type="text" id="notes" class="form-input" placeholder="Any additional notes">
-        </div>
-        
-        <button id="startRecordingBtn" class="btn btn-primary" disabled>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
-          Start Recording
-        </button>
-      </div>
-    </div>
+        try {
+          const success = await uploadWithChunks(record.payload, record.audioBlob, null);
+          if (success) {
+            await removeFromQueue(record.id);
+            console.log('Queued recording uploaded successfully, id:', record.id);
+          }
+        } catch (err) {
+          console.warn('Failed to upload queued recording id:', record.id, err);
+        }
+      }
+    } catch (e) {
+      console.error('Error processing queue:', e);
+    } finally {
+      state.isUploading = false;
+      elements.queueRetryBtn.disabled = false;
+      elements.queueRetryBtn.textContent = 'Retry';
+      updateQueueBanner();
+    }
+  }
 
-    <!-- Recording Screen -->
-    <div id="recordingScreen" class="screen">
-      <div class="recording-screen">
-        <div class="recording-status">
-          <div class="recording-dot" id="recordingDot"></div>
-          <span id="recordingStatusText">Recording</span>
-        </div>
-        
-        <div class="timer" id="timer">00:00:00</div>
-        
-        <div class="waveform" id="waveform"></div>
-        
-        <div class="recording-info">
-          <p><strong id="recordingClient">Client Name</strong></p>
-          <p id="recordingType">Listing Appointment</p>
-        </div>
-        
-        <div id="shortRecordingWarning" class="warning-banner" style="display: none;">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          <span>Recording is under 15 minutes. Are you sure the appointment is complete?</span>
-        </div>
-        
-        <div class="recording-controls">
-          <button class="record-btn pause" id="pauseResumeBtn">
-            <svg id="pauseIcon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            <svg id="playIcon" viewBox="0 0 24 24" style="display: none;"><path d="M8 5v14l11-7z"/></svg>
-          </button>
+  // ============================================
+  // Screen Navigation
+  // ============================================
+  
+  function showScreen(screenName) {
+    Object.values(screens).forEach(s => s.classList.remove('active'));
+    screens[screenName].classList.add('active');
+  }
+
+  // ============================================
+  // Login
+  // ============================================
+  
+  function checkStoredLogin() {
+    const stored = localStorage.getItem('wirUser');
+    if (stored) {
+      state.user = JSON.parse(stored);
+      updateUserDisplay();
+      showScreen('setup');
+    }
+  }
+
+  function login() {
+    const email = elements.loginEmail.value.trim();
+    const password = elements.loginPassword.value;
+
+    if (!email) {
+      showLoginError('Please enter your email');
+      return;
+    }
+
+    if (password !== CONFIG.password) {
+      showLoginError('Invalid password');
+      return;
+    }
+
+    state.user = {
+      email: email,
+      name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    };
+
+    localStorage.setItem('wirUser', JSON.stringify(state.user));
+    updateUserDisplay();
+    showScreen('setup');
+  }
+
+  function logout() {
+    localStorage.removeItem('wirUser');
+    state.user = null;
+    elements.loginEmail.value = '';
+    elements.loginPassword.value = '';
+    showScreen('login');
+  }
+
+  function showLoginError(message) {
+    elements.loginError.textContent = message;
+    elements.loginError.style.display = 'block';
+    setTimeout(() => {
+      elements.loginError.style.display = 'none';
+    }, 3000);
+  }
+
+  function updateUserDisplay() {
+    if (state.user) {
+      elements.userAvatar.textContent = state.user.name.charAt(0).toUpperCase();
+      elements.userName.textContent = state.user.name;
+      elements.userEmailDisplay.textContent = state.user.email;
+    }
+  }
+
+  // ============================================
+  // Setup Form
+  // ============================================
+  
+  function populateTCDropdown() {
+    CONFIG.teamMembers.forEach(tc => {
+      const option = document.createElement('option');
+      option.value = JSON.stringify(tc);
+      option.textContent = tc.name;
+      elements.tcSelect.appendChild(option);
+    });
+  }
+
+  function selectAppointmentType(type) {
+    state.appointmentType = type;
+    document.querySelectorAll('.type-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.type === type);
+    });
+    validateForm();
+  }
+
+  function validateForm() {
+    const isValid = 
+      elements.clientName.value.trim() !== '' &&
+      state.appointmentType !== '' &&
+      elements.tcSelect.value !== '';
+    
+    elements.startRecordingBtn.disabled = !isValid;
+  }
+
+  // ============================================
+  // Recording
+  // ============================================
+  
+  async function startRecording() {
+    if ('wakeLock' in navigator) {
+      try {
+        state.wakeLock = await navigator.wakeLock.request('screen');
+        console.log('Wake lock active');
+      } catch (err) {
+        console.log('Wake lock failed:', err);
+      }
+    }
+
+    state.clientName = elements.clientName.value.trim();
+    state.selectedTC = JSON.parse(elements.tcSelect.value);
+    state.notes = elements.notes.value.trim();
+
+    elements.recordingClient.textContent = state.clientName;
+    elements.recordingType.textContent = state.appointmentType;
+
+    elements.waveform.innerHTML = '';
+    for (let i = 0; i < 40; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'wave-bar';
+      bar.style.height = '10px';
+      elements.waveform.appendChild(bar);
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      
+      state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      state.analyser = state.audioContext.createAnalyser();
+      const source = state.audioContext.createMediaStreamSource(stream);
+      source.connect(state.analyser);
+      state.analyser.fftSize = 128;
+
+      state.mediaRecorder = new MediaRecorder(stream);
+      state.audioChunks = [];
+
+      state.mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          state.audioChunks.push(event.data);
+        }
+      };
+
+      state.mediaRecorder.start(1000);
+      state.isRecording = true;
+      state.isPaused = false;
+      state.recordingStartTime = Date.now();
+      state.elapsedTime = 0;
+      state.pausedTime = 0;
+
+      showScreen('recording');
+      startTimer();
+      startWaveform();
+
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+      alert('Could not access microphone. Please ensure you have granted permission.');
+    }
+  }
+
+  function startTimer() {
+    state.timerInterval = setInterval(() => {
+      if (!state.isPaused) {
+        state.elapsedTime = Date.now() - state.recordingStartTime - state.pausedTime;
+        updateTimerDisplay();
+      }
+    }, 100);
+  }
+
+  function updateTimerDisplay() {
+    const totalSeconds = Math.floor(state.elapsedTime / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    elements.timer.textContent = 
+      `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    const isShort = totalSeconds < 15 * 60;
+    elements.shortRecordingWarning.style.display = isShort ? 'flex' : 'none';
+  }
+
+  function startWaveform() {
+    const bars = elements.waveform.querySelectorAll('.wave-bar');
+    const dataArray = new Uint8Array(state.analyser.frequencyBinCount);
+
+    state.waveformInterval = setInterval(() => {
+      if (state.isPaused) {
+        bars.forEach(bar => bar.style.height = '10px');
+        return;
+      }
+
+      state.analyser.getByteFrequencyData(dataArray);
+      
+      bars.forEach((bar, i) => {
+        const value = dataArray[i] || 0;
+        const height = Math.max(10, (value / 255) * 60);
+        bar.style.height = `${height}px`;
+      });
+    }, 50);
+  }
+
+  function togglePauseResume() {
+    if (state.isPaused) {
+      state.mediaRecorder.resume();
+      state.isPaused = false;
+      state.pausedTime += Date.now() - state.pauseStartTime;
+      state.pauseStartTime = null;
+      
+      elements.recordingDot.classList.remove('paused');
+      elements.recordingStatusText.textContent = 'Recording';
+      elements.pauseResumeBtn.classList.remove('resume');
+      elements.pauseResumeBtn.classList.add('pause');
+      elements.pauseIcon.style.display = 'block';
+      elements.playIcon.style.display = 'none';
+    } else {
+      state.mediaRecorder.pause();
+      state.isPaused = true;
+      state.pauseStartTime = Date.now();
+      
+      elements.recordingDot.classList.add('paused');
+      elements.recordingStatusText.textContent = 'Paused';
+      elements.pauseResumeBtn.classList.remove('pause');
+      elements.pauseResumeBtn.classList.add('resume');
+      elements.pauseIcon.style.display = 'none';
+      elements.playIcon.style.display = 'block';
+    }
+  }
+
+  function showFinishConfirmation() {
+    const totalSeconds = Math.floor(state.elapsedTime / 1000);
+    
+    if (totalSeconds < 15 * 60) {
+      elements.modalTitle.textContent = 'Recording is Short';
+      elements.modalMessage.textContent = `You've only recorded ${Math.floor(totalSeconds / 60)} minutes. Are you sure the appointment is complete?`;
+    } else {
+      elements.modalTitle.textContent = 'Finish Recording?';
+      elements.modalMessage.textContent = 'Your recording will be processed and you\'ll receive the transcript via email within 15 minutes.';
+    }
+    
+    elements.confirmModal.style.display = 'flex';
+  }
+
+  function hideConfirmModal() {
+    elements.confirmModal.style.display = 'none';
+  }
+
+  async function finishRecording() {
+    if (state.wakeLock) {
+      state.wakeLock.release();
+      state.wakeLock = null;
+    }
+    hideConfirmModal();
+    
+    clearInterval(state.timerInterval);
+    clearInterval(state.waveformInterval);
+    
+    state.mediaRecorder.stop();
+    
+    await new Promise(resolve => {
+      state.mediaRecorder.onstop = resolve;
+    });
+
+    state.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    
+    if (state.audioContext) {
+      state.audioContext.close();
+    }
+
+    const audioBlob = new Blob(state.audioChunks, { type: 'audio/webm' });
+
+    const payload = {
+      agentName: state.user.name,
+      clientName: state.clientName,
+      appointmentType: state.appointmentType,
+      date: new Date().toISOString().split('T')[0],
+      notes: state.notes,
+      userEmail: state.user.email,
+      tcName: state.selectedTC.name,
+      tcEmail: state.selectedTC.email
+    };
+
+    await uploadRecording(payload, audioBlob);
+  }
+
+  // ============================================
+  // Chunked Upload Logic
+  // ============================================
+
+  function updateProgress(percent, message) {
+    elements.progressBar.style.width = percent + '%';
+    elements.progressText.textContent = message || `${Math.round(percent)}%`;
+  }
+
+  async function uploadWithChunks(payload, audioBlob, progressCallback) {
+    // Generate unique upload ID
+    const uploadId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Convert blob to base64
+    const base64Audio = await blobToBase64(audioBlob);
+    const base64Data = base64Audio.split(',')[1]; // Remove data URL prefix
+    
+    const totalSize = base64Data.length;
+    const chunkSize = CONFIG.chunkSize;
+    const totalChunks = Math.ceil(totalSize / chunkSize);
+    
+    console.log(`Starting chunked upload: ${totalChunks} chunks, ${(totalSize / 1024 / 1024).toFixed(2)}MB total`);
+    
+    // Upload each chunk
+    for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+      const start = chunkIndex * chunkSize;
+      const end = Math.min(start + chunkSize, totalSize);
+      const chunkData = base64Data.slice(start, end);
+      
+      const chunkPayload = {
+        action: 'uploadChunk',
+        uploadId: uploadId,
+        chunkIndex: chunkIndex,
+        totalChunks: totalChunks,
+        chunkData: chunkData,
+        // Include metadata only on first chunk
+        ...(chunkIndex === 0 ? { metadata: payload } : {})
+      };
+      
+      let success = false;
+      let lastError = null;
+      
+      for (let retry = 0; retry < CONFIG.maxRetries && !success; retry++) {
+        try {
+          const response = await fetch(CONFIG.appsScriptUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(chunkPayload)
+          });
           
-          <button class="finish-btn" id="finishBtn">Finish Recording</button>
-        </div>
+          const result = await response.json();
+          
+          if (result.success) {
+            success = true;
+            const progress = ((chunkIndex + 1) / totalChunks) * 100;
+            if (progressCallback) {
+              progressCallback(progress, `Uploading: chunk ${chunkIndex + 1}/${totalChunks}`);
+            }
+            console.log(`Chunk ${chunkIndex + 1}/${totalChunks} uploaded`);
+          } else {
+            lastError = result.message || 'Chunk upload failed';
+            console.warn(`Chunk ${chunkIndex + 1} failed (attempt ${retry + 1}): ${lastError}`);
+          }
+        } catch (err) {
+          lastError = err.message;
+          console.warn(`Chunk ${chunkIndex + 1} error (attempt ${retry + 1}): ${err.message}`);
+        }
+        
+        if (!success && retry < CONFIG.maxRetries - 1) {
+          await new Promise(resolve => setTimeout(resolve, 1000 * (retry + 1)));
+        }
+      }
+      
+      if (!success) {
+        throw new Error(`Failed to upload chunk ${chunkIndex + 1}: ${lastError}`);
+      }
+    }
+    
+    // Finalize upload
+    if (progressCallback) {
+      progressCallback(100, 'Finalizing...');
+    }
+    
+    const finalizePayload = {
+      action: 'finalizeUpload',
+      uploadId: uploadId,
+      totalChunks: totalChunks,
+      metadata: payload
+    };
+    
+    const finalResponse = await fetch(CONFIG.appsScriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(finalizePayload)
+    });
+    
+    const finalResult = await finalResponse.json();
+    
+    if (!finalResult.success) {
+      throw new Error(finalResult.message || 'Failed to finalize upload');
+    }
+    
+    console.log('Chunked upload complete!');
+    return true;
+  }
+
+  async function uploadRecording(payload, audioBlob) {
+    if (!navigator.onLine) {
+      await saveOffline(payload, audioBlob);
+      return;
+    }
+
+    elements.uploadingTitle.textContent = 'Uploading...';
+    elements.uploadingMessage.textContent = 'Please wait while we upload your recording.';
+    elements.uploadProgress.style.display = 'block';
+    updateProgress(0, 'Preparing...');
+    showScreen('uploading');
+
+    try {
+      await uploadWithChunks(payload, audioBlob, updateProgress);
+      showScreen('success');
+
+    } catch (error) {
+      console.error('Upload failed, saving offline:', error);
+      await saveOffline(payload, audioBlob);
+    }
+  }
+
+  async function saveOffline(payload, audioBlob) {
+    try {
+      elements.uploadingTitle.textContent = 'Saving locally...';
+      elements.uploadingMessage.textContent = 'No connection detected. Saving your recording to this device.';
+      elements.uploadProgress.style.display = 'none';
+      showScreen('uploading');
+
+      await saveToQueue(payload, audioBlob);
+      await updateQueueBanner();
+
+      setTimeout(() => {
+        showScreen('savedOffline');
+      }, 800);
+
+    } catch (err) {
+      console.error('Failed to save offline:', err);
+      alert('Error saving recording. Please try again or contact support.');
+      showScreen('setup');
+    }
+  }
+
+  function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  function resetForNewRecording() {
+    state.clientName = '';
+    state.appointmentType = '';
+    state.selectedTC = null;
+    state.notes = '';
+    state.audioChunks = [];
+    
+    elements.clientName.value = '';
+    elements.tcSelect.value = '';
+    elements.notes.value = '';
+    document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('selected'));
+    elements.startRecordingBtn.disabled = true;
+    
+    showScreen('setup');
+  }
+
+  // ============================================
+  // Service Worker Registration
+  // ============================================
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(() => {
+      console.log('Service worker registered');
+    }).catch(err => {
+      console.log('Service worker registration skipped:', err.message);
+    });
+  }
+
+  // ============================================
+  // Event Listeners
+  // ============================================
+  
+  elements.loginBtn.addEventListener('click', login);
+  elements.loginPassword.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') login();
+  });
+  elements.loginEmail.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') elements.loginPassword.focus();
+  });
+  elements.logoutBtn.addEventListener('click', logout);
+
+  document.querySelectorAll('.type-btn').forEach(btn => {
+    btn.addEventListener('click', () => selectAppointmentType(btn.dataset.type));
+  });
+
+  elements.clientName.addEventListener('input', validateForm);
+  elements.tcSelect.addEventListener('change', validateForm);
+
+  elements.startRecordingBtn.addEventListener('click', startRecording);
+  elements.pauseResumeBtn.addEventListener('click', togglePauseResume);
+  elements.finishBtn.addEventListener('click', showFinishConfirmation);
+  elements.modalCancel.addEventListener('click', hideConfirmModal);
+  elements.modalConfirm.addEventListener('click', finishRecording);
+  elements.newRecordingBtn.addEventListener('click', resetForNewRecording);
+  elements.newRecordingOfflineBtn.addEventListener('click', resetForNewRecording);
+  elements.queueRetryBtn.addEventListener('click', retryQueuedUploads);
+
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+
+  // ============================================
+  // Init
+  // ============================================
+  
+  async function init() {
+    await openDB();
+    populateTCDropdown();
+    checkStoredLogin();
+    updateOnlineStatus();
+    updateQueueBanner();
+
+    if (navigator.storage && navigator.storage.persist) {
+      const granted = await navigator.storage.persist();
+      console.log('Persistent storage:', granted ? 'granted' : 'not granted');
+    }
+  }
+
+  init();
+</script>
+
+</body>
+</html>
+6H5v-2h6V5h2v6h6v2z"/></svg>Start New Recording</button>
       </div>
     </div>
-
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="modal-overlay" style="display: none;">
-      <div class="modal">
-        <h3 id="modalTitle">Finish Recording?</h3>
-        <p id="modalMessage">Your recording will be processed and you'll receive the transcript via email within 15 minutes.</p>
-        <div class="modal-buttons">
-          <button class="btn btn-secondary" id="modalCancel">Keep Recording</button>
-          <button class="btn btn-primary" id="modalConfirm">Finish</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Uploading Screen -->
-    <div id="uploadingScreen" class="screen">
-      <div class="success-screen">
-        <div class="spinner" style="width: 60px; height: 60px; border-width: 4px; margin-bottom: 24px;"></div>
-        <h2 id="uploadingTitle">Uploading...</h2>
-        <p id="uploadingMessage">Please wait while we upload your recording.</p>
-      </div>
-    </div>
-
-    <!-- Success Screen -->
-    <div id="successScreen" class="screen">
-      <div class="success-screen">
-        <div class="success-icon">
-          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        </div>
-        <h2>Recording Submitted!</h2>
-        <p>Your appointment recording is being processed. You'll receive the transcript and notes via email within <span class="text-green">15 minutes</span>.</p>
-        <button id="newRecordingBtn" class="btn btn-success">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-          Start New Recording
-        </button>
-      </div>
-    </div>
-
-    <!-- Saved Offline Screen -->
-    <div id="savedOfflineScreen" class="screen">
-      <div class="success-screen">
-        <div class="saved-offline-icon">
-          <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45C23.16 18.16 24 16.68 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.15 0 10.77 0 14c0 3.31 2.69 6 6 6h11.73l2 2 1.27-1.27L4.27 4 3 5.27zM7.73 10l8 8H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h1.73z"/></svg>
-        </div>
-        <h2>Saved Locally</h2>
-        <p>No internet connection. Your recording has been saved to this device and will upload automatically when you're back online.</p>
-        <p style="font-size: 13px; opacity: 0.6; margin-bottom: 24px;">Keep your browser open or come back to this page later.</p>
-        <button id="newRecordingOfflineBtn" class="btn btn-success">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-          Start New Recording
-        </button>
-      </div>
-    </div>
-
   </div>
 
   <script>
-    // ============================================
-    // Configuration
-    // ============================================
-    
     const CONFIG = {
       appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzNbvlZCTMCPKYbPQJ5pvgS66iKN8naDqG09ATA7EmNHzmPBTaKLmWQ4SGYC13GdPP4Pw/exec',
       password: '#ONESTEPAHEAD2026',
@@ -867,41 +1688,20 @@
       ],
       dbName: 'WIR_RecorderDB',
       dbVersion: 1,
-      storeName: 'pendingUploads'
+      storeName: 'pendingUploads',
+      chunkSize: 4 * 1024 * 1024,
+      maxRetries: 3
     };
 
-    // ============================================
-    // State
-    // ============================================
-    
     let state = {
-      user: null,
-      clientName: '',
-      appointmentType: '',
-      selectedTC: null,
-      notes: '',
-      isRecording: false,
-      isPaused: false,
-      recordingStartTime: null,
-      elapsedTime: 0,
-      pausedTime: 0,
-      pauseStartTime: null,
-      mediaRecorder: null,
-      audioChunks: [],
-      timerInterval: null,
-      waveformInterval: null,
-      audioContext: null,
-      analyser: null,
-      wakeLock: null,
-      isOnline: navigator.onLine,
-      isUploading: false,
-      db: null
+      user: null, clientName: '', appointmentType: '', selectedTC: null, notes: '',
+      isRecording: false, isPaused: false, recordingStartTime: null,
+      elapsedTime: 0, pausedTime: 0, pauseStartTime: null,
+      mediaRecorder: null, audioChunks: [], timerInterval: null, waveformInterval: null,
+      audioContext: null, analyser: null, wakeLock: null,
+      isOnline: navigator.onLine, isUploading: false, db: null
     };
 
-    // ============================================
-    // DOM Elements
-    // ============================================
-    
     const screens = {
       login: document.getElementById('loginScreen'),
       setup: document.getElementById('setupScreen'),
@@ -947,34 +1747,24 @@
       queueBannerText: document.getElementById('queueBannerText'),
       queueRetryBtn: document.getElementById('queueRetryBtn'),
       uploadingTitle: document.getElementById('uploadingTitle'),
-      uploadingMessage: document.getElementById('uploadingMessage')
+      uploadingMessage: document.getElementById('uploadingMessage'),
+      uploadProgress: document.getElementById('uploadProgress'),
+      progressBarFill: document.getElementById('progressBarFill'),
+      progressText: document.getElementById('progressText')
     };
 
-    // ============================================
-    // IndexedDB — Offline Storage
-    // ============================================
-
+    // IndexedDB
     function openDB() {
       return new Promise((resolve, reject) => {
         const request = indexedDB.open(CONFIG.dbName, CONFIG.dbVersion);
-        
-        request.onupgradeneeded = (event) => {
-          const db = event.target.result;
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
           if (!db.objectStoreNames.contains(CONFIG.storeName)) {
-            const store = db.createObjectStore(CONFIG.storeName, { keyPath: 'id', autoIncrement: true });
-            store.createIndex('createdAt', 'createdAt', { unique: false });
+            db.createObjectStore(CONFIG.storeName, { keyPath: 'id', autoIncrement: true });
           }
         };
-
-        request.onsuccess = (event) => {
-          state.db = event.target.result;
-          resolve(state.db);
-        };
-
-        request.onerror = (event) => {
-          console.error('IndexedDB error:', event.target.error);
-          reject(event.target.error);
-        };
+        request.onsuccess = (e) => { state.db = e.target.result; resolve(state.db); };
+        request.onerror = (e) => reject(e.target.error);
       });
     }
 
@@ -983,19 +1773,8 @@
       return new Promise((resolve, reject) => {
         const tx = db.transaction(CONFIG.storeName, 'readwrite');
         const store = tx.objectStore(CONFIG.storeName);
-        
-        const record = {
-          payload: payload,
-          audioBlob: audioBlob,
-          createdAt: new Date().toISOString(),
-          retries: 0
-        };
-
-        const request = store.add(record);
-        request.onsuccess = () => {
-          console.log('Recording saved to offline queue, id:', request.result);
-          resolve(request.result);
-        };
+        const request = store.add({ payload, audioBlob, createdAt: new Date().toISOString() });
+        request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
       });
     }
@@ -1004,8 +1783,7 @@
       const db = state.db || await openDB();
       return new Promise((resolve, reject) => {
         const tx = db.transaction(CONFIG.storeName, 'readonly');
-        const store = tx.objectStore(CONFIG.storeName);
-        const request = store.getAll();
+        const request = tx.objectStore(CONFIG.storeName).getAll();
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
       });
@@ -1015,8 +1793,7 @@
       const db = state.db || await openDB();
       return new Promise((resolve, reject) => {
         const tx = db.transaction(CONFIG.storeName, 'readwrite');
-        const store = tx.objectStore(CONFIG.storeName);
-        const request = store.delete(id);
+        const request = tx.objectStore(CONFIG.storeName).delete(id);
         request.onsuccess = () => resolve();
         request.onerror = () => reject(request.error);
       });
@@ -1026,23 +1803,17 @@
       const db = state.db || await openDB();
       return new Promise((resolve, reject) => {
         const tx = db.transaction(CONFIG.storeName, 'readonly');
-        const store = tx.objectStore(CONFIG.storeName);
-        const request = store.count();
+        const request = tx.objectStore(CONFIG.storeName).count();
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
       });
     }
 
-    // ============================================
-    // Online / Offline Detection
-    // ============================================
-
+    // Online/Offline
     function updateOnlineStatus() {
       state.isOnline = navigator.onLine;
-      
       if (state.isOnline) {
         elements.offlineBanner.classList.remove('visible');
-        // Auto-retry queued uploads when back online
         retryQueuedUploads();
       } else {
         elements.offlineBanner.classList.add('visible');
@@ -1053,52 +1824,31 @@
       try {
         const count = await getQueueCount();
         if (count > 0) {
-          elements.queueBannerText.textContent = 
-            count === 1 
-              ? '1 recording waiting to upload' 
-              : `${count} recordings waiting to upload`;
+          elements.queueBannerText.textContent = count === 1 ? '1 recording waiting to upload' : `${count} recordings waiting to upload`;
           elements.queueBanner.classList.add('visible');
         } else {
           elements.queueBanner.classList.remove('visible');
         }
-      } catch (e) {
-        console.error('Error checking queue:', e);
-      }
+      } catch (e) { console.error('Queue check error:', e); }
     }
 
     async function retryQueuedUploads() {
       if (state.isUploading || !navigator.onLine) return;
-      
       state.isUploading = true;
       elements.queueRetryBtn.disabled = true;
       elements.queueRetryBtn.textContent = 'Uploading...';
-
       try {
         const recordings = await getQueuedRecordings();
-        
         for (const record of recordings) {
           if (!navigator.onLine) break;
-          
           try {
-            const base64Audio = await blobToBase64(record.audioBlob);
-            const fullPayload = { ...record.payload, audio: base64Audio.split(',')[1] };
-
-            const response = await fetch(CONFIG.appsScriptUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'text/plain' },
-              body: JSON.stringify(fullPayload)
-            });
-
+            await uploadWithChunks(record.payload, record.audioBlob, null);
             await removeFromQueue(record.id);
-            console.log('Queued recording uploaded successfully, id:', record.id);
-
-          } catch (err) {
-            console.warn('Failed to upload queued recording id:', record.id, err);
-          }
+            console.log('Queued upload success:', record.id);
+          } catch (err) { console.warn('Queued upload failed:', record.id, err); }
         }
-      } catch (e) {
-        console.error('Error processing queue:', e);
-      } finally {
+      } catch (e) { console.error('Queue processing error:', e); }
+      finally {
         state.isUploading = false;
         elements.queueRetryBtn.disabled = false;
         elements.queueRetryBtn.textContent = 'Retry';
@@ -1106,47 +1856,23 @@
       }
     }
 
-    // ============================================
-    // Screen Navigation
-    // ============================================
-    
-    function showScreen(screenName) {
+    function showScreen(name) {
       Object.values(screens).forEach(s => s.classList.remove('active'));
-      screens[screenName].classList.add('active');
+      screens[name].classList.add('active');
     }
 
-    // ============================================
     // Login
-    // ============================================
-    
     function checkStoredLogin() {
       const stored = localStorage.getItem('wirUser');
-      if (stored) {
-        state.user = JSON.parse(stored);
-        updateUserDisplay();
-        showScreen('setup');
-      }
+      if (stored) { state.user = JSON.parse(stored); updateUserDisplay(); showScreen('setup'); }
     }
 
     function login() {
       const email = elements.loginEmail.value.trim();
       const password = elements.loginPassword.value;
-
-      if (!email) {
-        showLoginError('Please enter your email');
-        return;
-      }
-
-      if (password !== CONFIG.password) {
-        showLoginError('Invalid password');
-        return;
-      }
-
-      state.user = {
-        email: email,
-        name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-      };
-
+      if (!email) { showLoginError('Please enter your email'); return; }
+      if (password !== CONFIG.password) { showLoginError('Invalid password'); return; }
+      state.user = { email, name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) };
       localStorage.setItem('wirUser', JSON.stringify(state.user));
       updateUserDisplay();
       showScreen('setup');
@@ -1160,12 +1886,10 @@
       showScreen('login');
     }
 
-    function showLoginError(message) {
-      elements.loginError.textContent = message;
+    function showLoginError(msg) {
+      elements.loginError.textContent = msg;
       elements.loginError.style.display = 'block';
-      setTimeout(() => {
-        elements.loginError.style.display = 'none';
-      }, 3000);
+      setTimeout(() => elements.loginError.style.display = 'none', 3000);
     }
 
     function updateUserDisplay() {
@@ -1176,60 +1900,37 @@
       }
     }
 
-    // ============================================
-    // Setup Form
-    // ============================================
-    
+    // Setup
     function populateTCDropdown() {
       CONFIG.teamMembers.forEach(tc => {
-        const option = document.createElement('option');
-        option.value = JSON.stringify(tc);
-        option.textContent = tc.name;
-        elements.tcSelect.appendChild(option);
+        const opt = document.createElement('option');
+        opt.value = JSON.stringify(tc);
+        opt.textContent = tc.name;
+        elements.tcSelect.appendChild(opt);
       });
     }
 
     function selectAppointmentType(type) {
       state.appointmentType = type;
-      document.querySelectorAll('.type-btn').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.type === type);
-      });
+      document.querySelectorAll('.type-btn').forEach(btn => btn.classList.toggle('selected', btn.dataset.type === type));
       validateForm();
     }
 
     function validateForm() {
-      const isValid = 
-        elements.clientName.value.trim() !== '' &&
-        state.appointmentType !== '' &&
-        elements.tcSelect.value !== '';
-      
-      elements.startRecordingBtn.disabled = !isValid;
+      elements.startRecordingBtn.disabled = !(elements.clientName.value.trim() && state.appointmentType && elements.tcSelect.value);
     }
 
-    // ============================================
     // Recording
-    // ============================================
-    
     async function startRecording() {
-      // Request wake lock to prevent screen from turning off
       if ('wakeLock' in navigator) {
-        try {
-          state.wakeLock = await navigator.wakeLock.request('screen');
-          console.log('Wake lock active');
-        } catch (err) {
-          console.log('Wake lock failed:', err);
-        }
+        try { state.wakeLock = await navigator.wakeLock.request('screen'); console.log('Wake lock active'); }
+        catch (err) { console.log('Wake lock failed:', err); }
       }
-
       state.clientName = elements.clientName.value.trim();
       state.selectedTC = JSON.parse(elements.tcSelect.value);
       state.notes = elements.notes.value.trim();
-
-      // Update recording screen info
       elements.recordingClient.textContent = state.clientName;
       elements.recordingType.textContent = state.appointmentType;
-
-      // Initialize waveform bars
       elements.waveform.innerHTML = '';
       for (let i = 0; i < 40; i++) {
         const bar = document.createElement('div');
@@ -1237,83 +1938,50 @@
         bar.style.height = '10px';
         elements.waveform.appendChild(bar);
       }
-
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        
-        // Set up audio analysis for waveform
         state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         state.analyser = state.audioContext.createAnalyser();
-        const source = state.audioContext.createMediaStreamSource(stream);
-        source.connect(state.analyser);
+        state.audioContext.createMediaStreamSource(stream).connect(state.analyser);
         state.analyser.fftSize = 128;
-
-        // Set up media recorder
         state.mediaRecorder = new MediaRecorder(stream);
         state.audioChunks = [];
-
-        state.mediaRecorder.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            state.audioChunks.push(event.data);
-          }
-        };
-
+        state.mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) state.audioChunks.push(e.data); };
         state.mediaRecorder.start(1000);
         state.isRecording = true;
         state.isPaused = false;
         state.recordingStartTime = Date.now();
         state.elapsedTime = 0;
         state.pausedTime = 0;
-
         showScreen('recording');
         startTimer();
         startWaveform();
-
-      } catch (error) {
-        console.error('Error accessing microphone:', error);
-        alert('Could not access microphone. Please ensure you have granted permission.');
+      } catch (err) {
+        console.error('Microphone error:', err);
+        alert('Could not access microphone. Please grant permission.');
       }
     }
 
     function startTimer() {
       state.timerInterval = setInterval(() => {
-        if (!state.isPaused) {
-          state.elapsedTime = Date.now() - state.recordingStartTime - state.pausedTime;
-          updateTimerDisplay();
-        }
+        if (!state.isPaused) { state.elapsedTime = Date.now() - state.recordingStartTime - state.pausedTime; updateTimerDisplay(); }
       }, 100);
     }
 
     function updateTimerDisplay() {
-      const totalSeconds = Math.floor(state.elapsedTime / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      elements.timer.textContent = 
-        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-      const isShort = totalSeconds < 15 * 60;
-      elements.shortRecordingWarning.style.display = isShort ? 'flex' : 'none';
+      const total = Math.floor(state.elapsedTime / 1000);
+      const h = Math.floor(total / 3600), m = Math.floor((total % 3600) / 60), s = total % 60;
+      elements.timer.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      elements.shortRecordingWarning.style.display = total < 900 ? 'flex' : 'none';
     }
 
     function startWaveform() {
       const bars = elements.waveform.querySelectorAll('.wave-bar');
       const dataArray = new Uint8Array(state.analyser.frequencyBinCount);
-
       state.waveformInterval = setInterval(() => {
-        if (state.isPaused) {
-          bars.forEach(bar => bar.style.height = '10px');
-          return;
-        }
-
+        if (state.isPaused) { bars.forEach(b => b.style.height = '10px'); return; }
         state.analyser.getByteFrequencyData(dataArray);
-        
-        bars.forEach((bar, i) => {
-          const value = dataArray[i] || 0;
-          const height = Math.max(10, (value / 255) * 60);
-          bar.style.height = `${height}px`;
-        });
+        bars.forEach((b, i) => b.style.height = `${Math.max(10, (dataArray[i] || 0) / 255 * 60)}px`);
       }, 50);
     }
 
@@ -1322,8 +1990,6 @@
         state.mediaRecorder.resume();
         state.isPaused = false;
         state.pausedTime += Date.now() - state.pauseStartTime;
-        state.pauseStartTime = null;
-        
         elements.recordingDot.classList.remove('paused');
         elements.recordingStatusText.textContent = 'Recording';
         elements.pauseResumeBtn.classList.remove('resume');
@@ -1334,7 +2000,6 @@
         state.mediaRecorder.pause();
         state.isPaused = true;
         state.pauseStartTime = Date.now();
-        
         elements.recordingDot.classList.add('paused');
         elements.recordingStatusText.textContent = 'Paused';
         elements.pauseResumeBtn.classList.remove('pause');
@@ -1345,53 +2010,29 @@
     }
 
     function showFinishConfirmation() {
-      const totalSeconds = Math.floor(state.elapsedTime / 1000);
-      
-      if (totalSeconds < 15 * 60) {
+      const total = Math.floor(state.elapsedTime / 1000);
+      if (total < 900) {
         elements.modalTitle.textContent = 'Recording is Short';
-        elements.modalMessage.textContent = `You've only recorded ${Math.floor(totalSeconds / 60)} minutes. Are you sure the appointment is complete?`;
+        elements.modalMessage.textContent = `You've only recorded ${Math.floor(total / 60)} minutes. Are you sure the appointment is complete?`;
       } else {
         elements.modalTitle.textContent = 'Finish Recording?';
-        elements.modalMessage.textContent = 'Your recording will be processed and you\'ll receive the transcript via email within 15 minutes.';
+        elements.modalMessage.textContent = "Your recording will be processed and you'll receive the transcript via email within 15 minutes.";
       }
-      
       elements.confirmModal.style.display = 'flex';
     }
 
-    function hideConfirmModal() {
-      elements.confirmModal.style.display = 'none';
-    }
+    function hideConfirmModal() { elements.confirmModal.style.display = 'none'; }
 
     async function finishRecording() {
-      // Release wake lock
-      if (state.wakeLock) {
-        state.wakeLock.release();
-        state.wakeLock = null;
-      }
+      if (state.wakeLock) { state.wakeLock.release(); state.wakeLock = null; }
       hideConfirmModal();
-      
-      // Stop recording
       clearInterval(state.timerInterval);
       clearInterval(state.waveformInterval);
-      
       state.mediaRecorder.stop();
-      
-      // Wait for final data
-      await new Promise(resolve => {
-        state.mediaRecorder.onstop = resolve;
-      });
-
-      // Stop all tracks
-      state.mediaRecorder.stream.getTracks().forEach(track => track.stop());
-      
-      if (state.audioContext) {
-        state.audioContext.close();
-      }
-
-      // Create audio blob
+      await new Promise(r => state.mediaRecorder.onstop = r);
+      state.mediaRecorder.stream.getTracks().forEach(t => t.stop());
+      if (state.audioContext) state.audioContext.close();
       const audioBlob = new Blob(state.audioChunks, { type: 'audio/webm' });
-
-      // Build metadata payload (audio added at upload time)
       const payload = {
         agentName: state.user.name,
         clientName: state.clientName,
@@ -1402,37 +2043,69 @@
         tcName: state.selectedTC.name,
         tcEmail: state.selectedTC.email
       };
-
       await uploadRecording(payload, audioBlob);
     }
 
-    async function uploadRecording(payload, audioBlob) {
-      // If offline, save immediately without showing uploading spinner
-      if (!navigator.onLine) {
-        await saveOffline(payload, audioBlob);
-        return;
+    // Chunked Upload
+    function updateProgress(pct, msg) {
+      elements.progressBarFill.style.width = pct + '%';
+      elements.progressText.textContent = msg || `${Math.round(pct)}%`;
+    }
+
+    async function uploadWithChunks(payload, audioBlob, progressCb) {
+      const uploadId = `${Date.now()}-${Math.random().toString(36).substr(2,9)}`;
+      const base64Audio = await blobToBase64(audioBlob);
+      const base64Data = base64Audio.split(',')[1];
+      const totalSize = base64Data.length;
+      const totalChunks = Math.ceil(totalSize / CONFIG.chunkSize);
+      console.log(`Chunked upload: ${totalChunks} chunks, ${(totalSize/1024/1024).toFixed(2)}MB`);
+
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * CONFIG.chunkSize;
+        const chunkData = base64Data.slice(start, Math.min(start + CONFIG.chunkSize, totalSize));
+        const chunkPayload = {
+          action: 'uploadChunk', uploadId, chunkIndex: i, totalChunks, chunkData,
+          ...(i === 0 ? { metadata: payload } : {})
+        };
+        let success = false, lastErr = null;
+        for (let retry = 0; retry < CONFIG.maxRetries && !success; retry++) {
+          try {
+            const resp = await fetch(CONFIG.appsScriptUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(chunkPayload) });
+            const result = await resp.json();
+            if (result.success) {
+              success = true;
+              if (progressCb) progressCb(((i + 1) / totalChunks) * 100, `Uploading: ${i + 1}/${totalChunks}`);
+              console.log(`Chunk ${i + 1}/${totalChunks} uploaded`);
+            } else { lastErr = result.message; }
+          } catch (e) { lastErr = e.message; }
+          if (!success && retry < CONFIG.maxRetries - 1) await new Promise(r => setTimeout(r, 1000 * (retry + 1)));
+        }
+        if (!success) throw new Error(`Chunk ${i + 1} failed: ${lastErr}`);
       }
 
-      // Show uploading screen
+      if (progressCb) progressCb(100, 'Finalizing...');
+      const finalResp = await fetch(CONFIG.appsScriptUrl, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'finalizeUpload', uploadId, totalChunks, metadata: payload })
+      });
+      const finalResult = await finalResp.json();
+      if (!finalResult.success) throw new Error(finalResult.message || 'Finalize failed');
+      console.log('Upload complete!');
+      return true;
+    }
+
+    async function uploadRecording(payload, audioBlob) {
+      if (!navigator.onLine) { await saveOffline(payload, audioBlob); return; }
       elements.uploadingTitle.textContent = 'Uploading...';
       elements.uploadingMessage.textContent = 'Please wait while we upload your recording.';
+      elements.uploadProgress.style.display = 'block';
+      updateProgress(0, 'Preparing...');
       showScreen('uploading');
-
       try {
-        const base64Audio = await blobToBase64(audioBlob);
-        const fullPayload = { ...payload, audio: base64Audio.split(',')[1] };
-
-        const response = await fetch(CONFIG.appsScriptUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(fullPayload)
-        });
-
-        // If fetch didn't throw, assume success
+        await uploadWithChunks(payload, audioBlob, updateProgress);
         showScreen('success');
-
-      } catch (error) {
-        console.error('Upload failed, saving offline:', error);
+      } catch (err) {
+        console.error('Upload failed:', err);
         await saveOffline(payload, audioBlob);
       }
     }
@@ -1440,19 +2113,15 @@
     async function saveOffline(payload, audioBlob) {
       try {
         elements.uploadingTitle.textContent = 'Saving locally...';
-        elements.uploadingMessage.textContent = 'No connection detected. Saving your recording to this device.';
+        elements.uploadingMessage.textContent = 'No connection. Saving to device.';
+        elements.uploadProgress.style.display = 'none';
         showScreen('uploading');
-
         await saveToQueue(payload, audioBlob);
         await updateQueueBanner();
-
-        setTimeout(() => {
-          showScreen('savedOffline');
-        }, 800);
-
+        setTimeout(() => showScreen('savedOffline'), 800);
       } catch (err) {
-        console.error('Failed to save offline:', err);
-        alert('Error saving recording. Please try again or contact support.');
+        console.error('Offline save failed:', err);
+        alert('Error saving recording.');
         showScreen('setup');
       }
     }
@@ -1472,49 +2141,27 @@
       state.selectedTC = null;
       state.notes = '';
       state.audioChunks = [];
-      
       elements.clientName.value = '';
       elements.tcSelect.value = '';
       elements.notes.value = '';
-      document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('selected'));
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
       elements.startRecordingBtn.disabled = true;
-      
       showScreen('setup');
     }
 
-    // ============================================
-    // Service Worker Registration (optional PWA)
-    // ============================================
-
+    // Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then(() => {
-        console.log('Service worker registered');
-      }).catch(err => {
-        // sw.js not present is fine — offline queue still works via IndexedDB
-        console.log('Service worker registration skipped:', err.message);
-      });
+      navigator.serviceWorker.register('sw.js').then(() => console.log('SW registered')).catch(e => console.log('SW skip:', e.message));
     }
 
-    // ============================================
     // Event Listeners
-    // ============================================
-    
     elements.loginBtn.addEventListener('click', login);
-    elements.loginPassword.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') login();
-    });
-    elements.loginEmail.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') elements.loginPassword.focus();
-    });
+    elements.loginPassword.addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
+    elements.loginEmail.addEventListener('keypress', e => { if (e.key === 'Enter') elements.loginPassword.focus(); });
     elements.logoutBtn.addEventListener('click', logout);
-
-    document.querySelectorAll('.type-btn').forEach(btn => {
-      btn.addEventListener('click', () => selectAppointmentType(btn.dataset.type));
-    });
-
+    document.querySelectorAll('.type-btn').forEach(b => b.addEventListener('click', () => selectAppointmentType(b.dataset.type)));
     elements.clientName.addEventListener('input', validateForm);
     elements.tcSelect.addEventListener('change', validateForm);
-
     elements.startRecordingBtn.addEventListener('click', startRecording);
     elements.pauseResumeBtn.addEventListener('click', togglePauseResume);
     elements.finishBtn.addEventListener('click', showFinishConfirmation);
@@ -1522,29 +2169,22 @@
     elements.modalConfirm.addEventListener('click', finishRecording);
     elements.newRecordingBtn.addEventListener('click', resetForNewRecording);
     elements.newRecordingOfflineBtn.addEventListener('click', resetForNewRecording);
-
-    // Online / Offline listeners
+    elements.queueRetryBtn.addEventListener('click', retryQueuedUploads);
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
 
-    // ============================================
     // Init
-    // ============================================
-    
     async function init() {
       await openDB();
       populateTCDropdown();
       checkStoredLogin();
       updateOnlineStatus();
       updateQueueBanner();
-
-      // Request persistent storage so the browser won't evict offline recordings
       if (navigator.storage && navigator.storage.persist) {
         const granted = await navigator.storage.persist();
         console.log('Persistent storage:', granted ? 'granted' : 'denied');
       }
     }
-
     init();
   </script>
 </body>
